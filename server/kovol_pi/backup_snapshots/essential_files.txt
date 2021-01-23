@@ -1,0 +1,11 @@
+/media/NAS/CLAHub/CLAHub_database.db
+/media/NAS/Team Share/Kovol_lexicon.ods
+/media/NAS/Team Share/Kovol_verbs.ods
+/media/NAS/Team Share/Grammar/Kovol_Grammar.odt
+/media/NAS/Team Share/Team documents/Kovol_strategy_statement.odt
+/media/NAS/Team Share/Team documents/backup_info.odt
+/media/NAS/Team Share/Team documents/Community projects/Soap_proposal.odt
+/media/NAS/Team Share/Team documents/kovol_medical_policy.odt
+/media/NAS/Team Share/Team documents/medical_stock.ods
+/media/NAS/Team Share/Team documents/ssh_access.odt
+/media/NAS/Team Share/Team documents/team_dinau.ods

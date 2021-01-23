@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Restarts samba, apache and CLAHub
+echo "Restarting file share, web_server and CLAHub"
+sudo service smbd restart
+sudo systemctl restart CLAHub
+sudo service apache2 restart
+echo "Done"

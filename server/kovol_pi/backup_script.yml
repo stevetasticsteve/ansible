@@ -1,0 +1,12 @@
+---
+- hosts: stanley_pi
+  vars_files:
+    - ./variables/server_pi_var.yml
+  #	become: true
+  tasks:
+    - name: Add backup script
+      template:
+        src: ./templates/backup.j2
+        dest: ~/code/backup/backup.py
+        mode: "0755"
+...

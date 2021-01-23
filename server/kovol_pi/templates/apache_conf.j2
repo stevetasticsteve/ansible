@@ -1,0 +1,63 @@
+<VirtualHost *:80>
+	
+	DocumentRoot {{ apache_folder }}
+	ServerName {{ hostname }}
+
+	ErrorLog ${APACHE_LOG_DIR}/CLAHub-error.log
+	CustomLog ${APACHE_LOG_DIR}/CLAHub-access.log combined
+
+	ProxyPreserveHost On
+	ProxyPass /static/ !
+	ProxyPass /uploads/ !
+	ProxyPass /songs !
+	ProxyPass /lexicon !
+	ProxyPass /texts !
+	ProxyPass /bootstrap !
+	ProxyPass /jquery !
+	ProxyPass / http://localhost:8000/
+	ProxyPassReverse / http://localhost:8000/
+	
+	Alias /static/ {{ CLAHub_folder}}/static/
+	Alias /uploads/ {{ CLAHub_folder}}/uploads/
+	Alias /songs {{ apache_folder }}/songs/KovolSongbook.html
+	Alias /lexicon {{ apache_folder }}/Lexicon/	
+	Alias /texts {{ apache_folder}}/texts/
+	Alias /bootstrap {{ code_folder}}/bootstrap/
+	Alias /jquery {{ code_folder }}/jquery/
+
+	<Directory {{ CLAHub_folder }}/static/>
+	Require all granted
+	Options Indexes FollowSymLinks Multiviews
+	Satisfy Any
+	</Directory>
+
+	<Directory {{ CLAHub_folder }}/uploads/>
+	Require all granted
+	Options Indexes FollowSymLinks Multiviews
+	Satisfy Any
+	</Directory>
+
+	<Directory {{ apache_folder }}/songs>
+	Require all granted
+	</Directory>
+
+	<Directory {{ apache_folder }}/Lexicon>
+	Require all granted
+	DirectoryIndex main_dict.html
+	</Directory>
+
+	<Directory {{ apache_folder }}/texts>
+	Require all granted
+	Options Indexes FollowSymLinks
+	</Directory>
+	
+	<Directory {{ code_folder }}/bootstrap>
+	Require all granted
+	</Directory>
+	
+	<Directory {{ code_folder }}/jquery>
+	Require all granted
+	</Directory>
+	
+
+</VirtualHost>
