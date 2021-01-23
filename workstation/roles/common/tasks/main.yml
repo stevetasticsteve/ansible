@@ -1,0 +1,7 @@
+- name: Update OS
+  apt:
+    upgrade: dist
+
+- name: Install base packages
+  apt:
+    name: "{{base_packages}}"
