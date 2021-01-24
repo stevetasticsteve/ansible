@@ -1,0 +1,5 @@
+- name: Turn on night light
+  become_user: "{{user}}"
+  dconf:
+   key: /org/gnome/settings-daemon/plugins/color/night-light-enabled
+   value: "true"

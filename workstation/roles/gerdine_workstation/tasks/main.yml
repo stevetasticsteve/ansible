@@ -1,0 +1,6 @@
+- name: Set Gerdine's desktop background
+  become_user: "{{user}}"
+  dconf:
+   key: "/org/gnome/desktop/background/picture-uri"
+   value: "'file:///usr/share/backgrounds/Crocus_Wallpaper_by_Roy_Tanck.jpg'"
+git

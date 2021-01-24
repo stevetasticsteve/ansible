@@ -2,6 +2,57 @@
   apt:
     upgrade: dist
 
+- name: Add PPAs
+  apt_repository:
+    repo: "{{item}}"
+    state: present
+    update_cache: True
+  loop:
+   "{{workstation_ppa}}"
+
 - name: Install base packages
   apt:
-    name: "{{base_packages}}"
+    name: "{{workstation_packages}}"
+
+- name: Install base snap packages
+  snap:
+    name: "{{workstation_snap_packages}}"
+
+- name: Install classic snaps
+  snap:
+    name: "{{workstation_classic_snaps}}"
+    classic: yes
+
+- name: Check if tagspaces installed
+  command: dpkg-query -W tagspaces
+  register: tagspaces_check
+  failed_when: tagspaces_check.rc > 1
+  changed_when: tagspaces_check.rc == 1
+
+- name: Download tagspaces
+  get_url:
+   url: "https://www.tagspaces.org/downloads/tagspaces-amd64.deb"
+   dest: /tmp/tagspaces-amd64.deb
+   mode: "0644"
+  when: tagspaces_check.rc == 1
+
+- name: Install tagspaces
+  apt:
+   deb: /tmp/tagspaces-amd64.deb
+   sudo: True
+  when: tagspaces_check.rc == 1
+
+- name: Create template files
+  file:
+    path: "/home/{{user}}/Templates/{{item}}"
+    state: file
+    owner: "{{user}}"
+    mode: "0664"
+  loop:
+   "{{workstation_templates}}"
+
+- name: Enable DVD playback
+  shell: yes | dpkg-reconfigure libdvd-pkg
+
+- include: gnome.yml
+

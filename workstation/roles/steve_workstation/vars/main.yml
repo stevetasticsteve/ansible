@@ -1,0 +1,13 @@
+user: steve
+
+steve_workstation_ppa:
+ - ppa:kdenlive/kdenlive-stable
+
+steve_workstation_packages:
+ - inkscape
+ - calibre
+ - rpi-imager
+ - kdenlive
+
+steve_workstation_classic_snaps:
+ - pycharm-community

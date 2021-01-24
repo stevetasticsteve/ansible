@@ -1,0 +1,27 @@
+- name: Add Steve's PPAs
+  apt_repository:
+    repo: "{{item}}"
+    state: present
+    update_cache: True
+  loop:
+   "{{steve_workstation_ppa}}"
+
+- name: Install Steve's packages
+  apt:
+    name: "{{steve_workstation_packages}}"
+
+- name: Install Steve's classic snaps
+  snap:
+    name: "{{steve_workstation_classic_snaps}}"
+    classic: yes
+
+- name: Copy desktop wallpaper
+  copy:
+   src: ./files/dragon_orbit.jpg
+   dest: /usr/share/backgrounds/dragon_orbit.jpg
+
+- name: Set Steve's desktop background
+  become_user: "{{user}}"
+  dconf:
+   key: "/org/gnome/desktop/background/picture-uri"
+   value: "'file:///usr/share/backgrounds/dragon_orbit.jpg'"

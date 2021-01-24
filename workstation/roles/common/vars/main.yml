@@ -1,2 +1,70 @@
-base_packages:
+workstation_ppa:
+ - ppa:keymanapp/keyman
+
+workstation_packages:
+# Apt packages
+ # System
+ - duplicity        # backup
+ - gnome-tweak-tool # desktop customisation
+ - tlp              # battery management # Don't install on POP
+ - neofetch         # cli system info
+ - git              # version control
+ - virt-manager     # virtual machines
+ # Security
+ - cryptsetup       # LUKS utilites
+ - ufw              # firewall
+ - gufw             # graphical firewall
+ # Python
+ - python3-distutils
+ - python3-venv
+ - python3-pip
+ - python3-psutil
+ # File handling
+ - hashalot         # hashing library
+ - fdupes           # cli to find duplicated files
+ - cifs-utils       # network shares
+ - p7zip-full       # 7z features, inc. encryption
+ - sqlitebrowser    # sqlite database viewing
+ # Networking
+ - net-tools
+ - vnstat           # monitor data usage
+ - nmap             # network profiling
+ # Office
+ - hunspell-en-gb   # British spell check
+ # Multimedia
+ - vlc
+ - mplayer          # required for anki media playback
+ - ubuntu-restricted-extras
+ - libavcodec-extra
+ - libdvd-pkg
+ - steam
+
+ # Media editing
+ - audacity
+ - gimp
+ - kid3-qt         # mp3 tagging
+ # Language learning
  - anki
+ - gthumb         # photobook printing
+ - keyman         # phonetic keyboard
+ - ibus-keyman
+ #- onboard       # onscreen keyboard
+
+workstation_snap_packages:
+ # Security
+ - authy
+ - bitwarden
+ # Note taking
+ - standard-notes
+
+workstation_classic_snaps:
+ # snaps using classic (system access) permissions
+ - code
+
+workstation_templates:
+ - markdown.md
+ - blank_file
+ - python_file.py
+ - document.odt
+ - spreadsheet.ods
+
