@@ -1,1 +1,5 @@
 user: gerdine
+
+gerdine_workstation_packages:
+ - xpad
+ - openssh-server

@@ -10,6 +10,18 @@
   loop:
    "{{workstation_ppa}}"
 
+- name: Add Papirus ppa
+  apt_repository:
+   repo: ppa:papirus/papirus
+   state: present
+   update_cache: True
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Install papirus icons
+  apt:
+   name: papirus-icon-theme
+  when: ansible_distribution == 'Ubuntu'
+
 - name: Install base packages
   apt:
     name: "{{workstation_packages}}"
@@ -53,6 +65,10 @@
 
 - name: Enable DVD playback
   shell: yes | dpkg-reconfigure libdvd-pkg
+
+- name: Enable firewall
+  ufw:
+   state: enabled
 
 - include: gnome.yml
 

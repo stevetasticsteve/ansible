@@ -3,4 +3,13 @@
   dconf:
    key: "/org/gnome/desktop/background/picture-uri"
    value: "'file:///usr/share/backgrounds/Crocus_Wallpaper_by_Roy_Tanck.jpg'"
-git
+
+- name: Install Gerdine's packages
+  apt:
+    name: "{{gerdine_workstation_packages}}"
+
+- name: Allow SSH over firewall
+  ufw:
+   state: enabled
+   rule: allow
+   name: ssh
