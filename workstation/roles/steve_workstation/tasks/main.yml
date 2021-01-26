@@ -25,3 +25,13 @@
   dconf:
    key: "/org/gnome/desktop/background/picture-uri"
    value: "'file:///usr/share/backgrounds/dragon_orbit.jpg'"
+
+- name: Include credentials vars
+  include_vars:
+   file: credentials.yml
+
+- name: Add Gerdine user
+  user:
+   name: gerdine
+   password: "{{steve_workstation_gerdine_user_password}}"
+   update_password: on_create

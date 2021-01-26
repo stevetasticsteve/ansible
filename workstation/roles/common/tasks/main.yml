@@ -51,8 +51,25 @@
 - name: Install tagspaces
   apt:
    deb: /tmp/tagspaces-amd64.deb
-   sudo: True
   when: tagspaces_check.rc == 1
+
+- name: Check if zoom installed
+  command: dpkg-query -W zoom
+  register: zoom_check
+  failed_when: zoom_check.rc > 1
+  changed_when: zoom_check.rc == 1
+
+- name: Download zoom
+  get_url:
+   url: "https://zoom.us/client/latest/zoom_amd64.deb"
+   dest: /tmp/zoom-amd64.deb
+   mode: "0644"
+  when: zoom_check.rc == 1
+
+- name: Install zoom
+  apt:
+   deb: /tmp/zoom-amd64.deb
+  when: zoom_check.rc == 1
 
 - name: Create template files
   file:
