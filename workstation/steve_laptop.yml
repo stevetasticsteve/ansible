@@ -1,5 +1,8 @@
 - hosts: localhost
   become: True
+  vars_prompt:
+   - name: gerdine_password
+     prompt: "password for gerdine user: "
   
   roles:
    - common

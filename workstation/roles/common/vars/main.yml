@@ -19,6 +19,7 @@ workstation_packages:
  - python3-venv
  - python3-pip
  - python3-psutil
+ - python3-virtualenv
  # File handling
  - hashalot         # hashing library
  - fdupes           # cli to find duplicated files
@@ -29,8 +30,10 @@ workstation_packages:
  - net-tools
  - vnstat           # monitor data usage
  - nmap             # network profiling
+ - rclone	    # cloud storage
  # Office
  - hunspell-en-gb   # British spell check
+ - thunderbird
  # Multimedia
  - vlc
  - mplayer          # required for anki media playback
@@ -38,7 +41,6 @@ workstation_packages:
  - libavcodec-extra
  - libdvd-pkg
  - steam
-
  # Media editing
  - audacity
  - gimp
@@ -67,5 +69,3 @@ workstation_templates:
  - python_file.py
  - document.odt
  - spreadsheet.ods
-
- 3Q6CAA88cHk4Jz

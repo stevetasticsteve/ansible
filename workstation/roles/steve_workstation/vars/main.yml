@@ -8,6 +8,7 @@ steve_workstation_packages:
  - calibre
  - rpi-imager
  - kdenlive
+ - ffmpeg
 
 steve_workstation_classic_snaps:
  - pycharm-community
