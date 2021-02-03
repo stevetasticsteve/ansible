@@ -1,8 +1,12 @@
 - hosts: localhost
+  connection: local
   become: True
   vars_prompt:
    - name: gerdine_password
      prompt: "password for gerdine user: "
+     private: yes
+     encrypt: sha512_crypt
+     confirm: yes
   
   roles:
    - common
