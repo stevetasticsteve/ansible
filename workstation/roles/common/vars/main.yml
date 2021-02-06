@@ -1,5 +1,6 @@
 workstation_ppa:
  - ppa:keymanapp/keyman
+ - ppa:mozillateam/ppa
 
 workstation_packages:
 # Apt packages

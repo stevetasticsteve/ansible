@@ -9,6 +9,7 @@ steve_workstation_packages:
  - rpi-imager
  - kdenlive
  - ffmpeg
+ - docker
 
 steve_workstation_classic_snaps:
  - pycharm-community

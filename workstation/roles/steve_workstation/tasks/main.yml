@@ -26,8 +26,9 @@
    key: "/org/gnome/desktop/background/picture-uri"
    value: "'file:///usr/share/backgrounds/dragon_orbit.jpg'"
 
+
 - name: Add Gerdine user
   user:
    name: gerdine
-   password: "{{gerdine_user_password}} | password_hash('sha256')}}"
+   password: "{{gerdine_user_password}}"
    update_password: on_create
