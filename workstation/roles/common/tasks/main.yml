@@ -35,6 +35,11 @@
     name: "{{workstation_classic_snaps}}"
     classic: yes
 
+- name: Install Authy Beta snap
+  snap:
+    name: authy
+    channel: beta
+
 - name: Check if tagspaces installed
   command: dpkg-query -W tagspaces
   register: tagspaces_check
@@ -74,14 +79,14 @@
 - name: Create template files
   file:
     path: "/home/{{user}}/Templates/{{item}}"
-    state: file
+    state: touch
     owner: "{{user}}"
     mode: "0664"
   loop:
    "{{workstation_templates}}"
 
 - name: Enable DVD playback
-  shell: yes | dpkg-reconfigure libdvd-pkg
+  shell: dpkg-reconfigure libdvd-pkg
 
 - name: Enable firewall
   ufw:

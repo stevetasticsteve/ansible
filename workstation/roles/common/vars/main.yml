@@ -11,6 +11,8 @@ workstation_packages:
  - neofetch         # cli system info
  - git              # version control
  - virt-manager     # virtual machines
+ - curl	    # grabbing web pages
+ - snapd	    # snap packages
  # Security
  - cryptsetup       # LUKS utilites
  - ufw              # firewall
@@ -55,7 +57,7 @@ workstation_packages:
 
 workstation_snap_packages:
  # Security
- - authy
+ # Authy requires Beta channel
  - bitwarden
  # Note taking
  - standard-notes

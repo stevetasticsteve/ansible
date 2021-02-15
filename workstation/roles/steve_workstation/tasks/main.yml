@@ -1,3 +1,8 @@
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
 - name: Add Steve's PPAs
   apt_repository:
     repo: "{{item}}"
@@ -6,9 +11,16 @@
   loop:
    "{{steve_workstation_ppa}}"
 
+
 - name: Install Steve's packages
   apt:
     name: "{{steve_workstation_packages}}"
+
+- name: Add user to docker group
+  user:
+   name: "{{user}}"
+   groups: docker
+   append: yes
 
 - name: Install Steve's classic snaps
   snap:

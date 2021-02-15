@@ -2,6 +2,7 @@ user: steve
 
 steve_workstation_ppa:
  - ppa:kdenlive/kdenlive-stable
+ - deb https://download.docker.com/linux/ubuntu {{ansible_lsb.codename}} stable
 
 steve_workstation_packages:
  - inkscape
@@ -9,7 +10,10 @@ steve_workstation_packages:
  - rpi-imager
  - kdenlive
  - ffmpeg
- - docker
+ # Docker
+ - docker-ce
+ - docker-ce-cli
+ - containerd.io
 
 steve_workstation_classic_snaps:
  - pycharm-community
