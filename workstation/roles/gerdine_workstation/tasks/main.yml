@@ -21,7 +21,7 @@
 
 - name: Authorize SSH keys
   authorized_key:
-    user: "{{ username }}"
+    user: "{{ user }}"
     key: "{{ item }}"
     state: present
   with_file:
