@@ -17,7 +17,7 @@
   ufw:
    state: enabled
    rule: allow
-   name: ssh
+   name: OpenSSH
 
 - name: Enable Steve's SSH key
   authorized_key:
