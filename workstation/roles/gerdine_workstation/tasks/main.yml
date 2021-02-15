@@ -19,8 +19,10 @@
    rule: allow
    name: OpenSSH
 
-- name: Enable Steve's SSH key
+- name: Authorize SSH keys
   authorized_key:
-    user: "{{user}}"
+    user: "{{ username }}"
+    key: "{{ item }}"
     state: present
-    key: ./files/steve_ssh.pub
+  with_file:
+   - ./files/steve_ssh.pub
