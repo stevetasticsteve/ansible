@@ -1,7 +1,7 @@
 #!/bin/bash
 
 read -p "Set up for (s)teve or (g)erdine?: " user 
-sudo apt install ansible -y
+sudo apt install ansible curl -y
 curl https://github.com/stevetasticsteve/ansible/archive/master.zip -L -o /tmp/ansible.zip
 sudo rm -r /tmp/ansible
 unzip /tmp/ansible.zip -d /tmp/ansible

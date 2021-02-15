@@ -1,3 +1,8 @@
+- name: Copy desktop wallpaper
+  copy:
+   src: ./files/Crocus_Wallpaper_by_Roy_Tanck.jpg
+   dest: /usr/share/backgrounds/Crocus_Wallpaper_by_Roy_Tanck.jpg
+
 - name: Set Gerdine's desktop background
   become_user: "{{user}}"
   dconf:
