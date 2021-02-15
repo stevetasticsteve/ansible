@@ -15,7 +15,7 @@
    name: ssh
 
 - name: Enable Steve's SSH key
-      authorized_key:
-        user: "{{user}}"
-        state: present
-        key: ./files/steve_ssh.pub
+  authorized_key:
+    user: "{{user}}"
+    state: present
+    key: ./files/steve_ssh.pub

@@ -61,4 +61,6 @@
   user:
    name: gerdine
    password: "{{gerdine_user_password}}"
+   groups: 
+   append: yes
    update_password: on_create
