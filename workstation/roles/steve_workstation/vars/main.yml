@@ -7,7 +7,6 @@ steve_workstation_ppa:
 steve_workstation_packages:
  - inkscape
  - calibre
- - rpi-imager
  - kdenlive
  - ffmpeg
  # Docker

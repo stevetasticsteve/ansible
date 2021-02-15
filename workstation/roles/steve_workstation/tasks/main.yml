@@ -11,6 +11,24 @@
   loop:
    "{{steve_workstation_ppa}}"
 
+- name: Check if rpi-imager installed
+  command: dpkg-query -W rpi-imager
+  register: rpi_check
+  failed_when: rpi_check.rc > 1
+  changed_when: rpi_check.rc == 1
+
+- name: Download rpi-imager
+  get_url:
+   url: https://downloads.raspberrypi.org/imager/imager_1.5_amd64.deb
+   dest: /tmp/imager_1.5_amd64.deb
+   mode: "0644"
+  when: rpi_check.rc == 1
+
+- name: Install rpi
+  apt:
+   deb: /tmp/imager_1.5_amd64.deb
+  when: rpi_check.rc == 1
+
 
 - name: Install Steve's packages
   apt:

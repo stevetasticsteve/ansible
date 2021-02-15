@@ -85,8 +85,8 @@
   loop:
    "{{workstation_templates}}"
 
-- name: Enable DVD playback
-  shell: dpkg-reconfigure libdvd-pkg
+#- name: Enable DVD playback
+#  shell: dpkg-reconfigure libdvd-pkg
 
 - name: Enable firewall
   ufw:
