@@ -1,0 +1,20 @@
+- name: Set up new admin user
+  user:
+   name: "{{ username }}"
+   shell: /bin/bash
+   password: "{{ password | password_hash('sha512')}}"
+   groups: sudo
+   append: yes
+
+- name: Authorize SSH keys
+  authorized_key:
+    user: "{{ username }}"
+    key: "{{ item }}"
+    state: present
+  with_file:
+   - ./files/steve_ssh.pub
+
+- name: Update system
+  apt:
+    upgrade: dist
+

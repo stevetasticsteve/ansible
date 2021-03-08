@@ -1,7 +1,7 @@
 # First playbook to run on a fresh rasbperry pi: Asks for new username and password, creates it, enables SSH key login
 # and deletes pi user.
 ---
-- hosts: server_pi
+- hosts: all
   vars_files:
     - ~/Documents/Computing/Linux_deployment/Ansible/ssh_keys.yml
   vars_prompt:
@@ -15,9 +15,9 @@
     - name: Set up admin user
       user:
         name: "{{ new_username }}"
-        shell: /bin/bash
+        shell: /bin/bashsudo
         password: "{{ new_password }}"
-        groups: sudo
+        groups: sudo,docker
         append: yes
     - name: Authorize SSH keys
       authorized_key:

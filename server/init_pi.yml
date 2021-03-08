@@ -1,0 +1,17 @@
+---
+- name: init_pi
+  vars_prompt:
+   - name: username
+     prompt: New username for root user?
+     private: no
+
+   - name: password
+     prompt: New user password?
+
+  hosts: all
+  become: True
+  remote_user: pi
+
+  roles:
+   - raspberrypi_bootstrap
+...

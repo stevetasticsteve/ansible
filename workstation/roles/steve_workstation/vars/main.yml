@@ -9,6 +9,7 @@ steve_workstation_packages:
  - calibre
  - kdenlive
  - ffmpeg
+ - filezilla
  # Docker
  - docker-ce
  - docker-ce-cli
