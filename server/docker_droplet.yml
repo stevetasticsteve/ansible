@@ -1,0 +1,16 @@
+---
+- name: Prepare docker droplet
+  vars_prompt:
+   - name: username
+     prompt: New username for root user?
+     private: no
+
+   - name: password
+     prompt: New user password?
+
+  hosts: docker_droplets
+  become: True
+
+  roles:
+   - docker_droplet
+...
