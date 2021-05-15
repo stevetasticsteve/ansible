@@ -1,6 +1,7 @@
 user: steve
 
 steve_workstation_ppa:
+ - ppa:obsproject/obs-studio
  - ppa:kdenlive/kdenlive-stable
  - deb https://download.docker.com/linux/ubuntu {{ansible_lsb.codename}} stable
 
@@ -10,10 +11,14 @@ steve_workstation_packages:
  - kdenlive
  - ffmpeg
  - filezilla
+ - sshpass
  # Docker
  - docker-ce
  - docker-ce-cli
  - containerd.io
+ # OBS
+ - ffmpeg
+ - obs-studio
 
 steve_workstation_classic_snaps:
  - pycharm-community

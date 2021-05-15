@@ -88,6 +88,13 @@
 - name: Enable firewall
   ufw:
    state: enabled
+   
+- name: Add user to KVM group
+  user:
+   name: "{{user}}"
+   groups: kvm, libvirt
+   append: yes
+  loop:
 
 - include: gnome.yml
 

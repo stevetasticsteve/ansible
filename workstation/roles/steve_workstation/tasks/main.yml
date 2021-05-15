@@ -55,6 +55,11 @@
   dconf:
    key: "/org/gnome/desktop/background/picture-uri"
    value: "'file:///usr/share/backgrounds/dragon_orbit.jpg'"
+   
+- name: Remove Ubuntu dock
+  apt:
+    name: gnome-shell-extension-ubuntu-dock
+    state: absent
 
 
 - name: Add Gerdine user
