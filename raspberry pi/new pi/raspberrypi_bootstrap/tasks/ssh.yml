@@ -1,0 +1,31 @@
+- name: disable ssh login for user pi
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    line: "DenyUsers pi"
+    state: present
+  notify:
+    - Restart SSH
+
+- name: Disable password authentication
+  lineinfile:
+   path: /etc/ssh/sshd_config
+   line: PasswordAuthentication no
+   regexp: '^#PasswordAuthentication'
+  notify:
+    - Restart SSH
+
+- name: Disable pam authentication
+  lineinfile:
+   path: /etc/ssh/sshd_config
+   line: UsePAM no
+   regexp: '^UsePAM yes'
+  notify:
+    - Restart SSH
+
+- name: Disable root login
+  lineinfile:
+   path: /etc/ssh/sshd_config
+   line: PermitRootLogin no 
+   regexp: '^#PermitRootLogin'
+  notify:
+    - Restart SSH

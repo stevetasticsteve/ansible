@@ -1,0 +1,4 @@
+- name: restart Docker
+  service:
+   name: docker
+   state: reloaded

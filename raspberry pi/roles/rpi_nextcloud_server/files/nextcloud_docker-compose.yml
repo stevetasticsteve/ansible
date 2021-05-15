@@ -1,0 +1,86 @@
+version: '3'
+
+services:
+
+  reverse-proxy:
+    image: jwilder/nginx-proxy:latest
+    container_name: reverse-proxy
+    volumes:
+        - /var/run/docker.sock:/tmp/docker.sock:ro
+        - vhost:/etc/nginx/vhost.d
+        - html:/usr/share/nginx/html
+        - dhparam:/etc/nginx/dhparam
+
+    restart: unless-stopped
+    networks: 
+        - nginx-proxy
+    ports:
+        - 80:80
+        - 443:443
+
+  nextcloud_db:
+    image: postgres
+    container_name: nextcloud_postgres
+    restart: always
+    volumes:
+      - nextcloud_db:/var/lib/postgresql/data
+      - nextcloud_data:/var/www/html
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    networks:
+      - back
+
+  nextcloud:
+    image: nextcloud
+    container_name: nextcloud
+    restart: always
+    volumes:
+      - nextcloud_data:/var/www/html
+    environment:
+      - VIRTUAL_HOST=${IP_ADDRESS},localhost
+
+      - POSTGRES_HOST=nextcloud_db
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
+      - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_PASSWORD}
+      - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_USER}
+      - NEXTCLOUD_TRUSTED_DOMAINS=${IP_ADDRESS}
+
+      - REDIS_HOST=nextcloud_redis
+    networks:
+      - back
+      - nginx-proxy
+    depends_on:
+      - nextcloud_db
+      - reverse-proxy
+
+  redis:
+      image: redis
+      container_name: nextcloud_redis
+      restart: always
+      networks:
+        - back
+
+
+volumes:
+  nextcloud_db:
+    name: nextcloud_db
+  nextcloud_data:
+    name: nextcloud_data
+  vhost:
+    name: nginx_vhost
+  html:
+    name: nginx_html
+  dhparam:
+    name: nginx_dhparam
+
+networks:
+  nginx-proxy:
+    external: true
+  back:
+    driver: bridge
+    name: nextcloud_backend

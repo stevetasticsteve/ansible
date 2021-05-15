@@ -1,0 +1,113 @@
+- name: Set up new admin user
+  user:
+   name: "{{ new_admin_user }}"
+   shell: /bin/bash
+   password: "{{ new_admin_password | password_hash('sha512')}}"
+   groups: sudo
+   append: yes
+   update_password: on_create
+   state: present
+
+- name: Authorize SSH keys
+  authorized_key:
+    user: "{{ new_admin_user }}"
+    key: "{{ item }}"
+    state: present
+  with_file:
+   - steve_ssh.pub
+
+- name: change user
+  set_fact:
+    ansible_user: "{{ new_admin_user }}"
+    ansible_become_password: "{{ new_admin_password }}"
+  when: ansible_user != new_admin_user
+
+- name: remove pi user
+  user:
+    name: pi
+    state: absent
+    remove: yes
+    force: yes
+
+- name: Configure ssh
+  include_tasks: ssh.yml
+
+- name: Add additional users
+  user:
+   name: "{{ item.name }}"
+   shell: /bin/bash
+   password: "{{ item.password | password_hash('sha512')}}"
+   groups: "{{ item.groups }}"
+   append: yes
+   update_password: on_create
+  loop: "{{ additional_users }}"
+  when: additional_users is defined
+
+- name: Authorize additional SSH keys
+  authorized_key:
+    user: "{{ item.name }}"
+    key: "{{ item.key }}"
+    state: present
+  with_items: "{{ additional_users }}"
+
+- name: Update system
+  apt:
+    upgrade: dist
+    update_cache: yes
+
+- name: Set static IP on eth0
+  template:
+    src: dhcpcd.j2
+    dest: /etc/dhcpcd.conf
+    owner: root
+    mode: "0664"
+
+- name: Set hostname
+  hostname:
+    name: "{{ hostname }}"
+
+- name: Install basic packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - git
+    - duplicity
+    #- cockpit
+
+- name: Install ufw
+  apt:
+    name: ufw
+    state: present
+  register: ufw_install
+
+- name: reboot for ufw
+  reboot:
+  when: ufw_install.changed
+
+- name: Enable firewall
+  ufw:
+    state: enabled
+    rule: allow
+    name: ssh
+
+- name: mount external storage
+  mount:
+    path: "{{ item.mount_point }}"
+    src: "UUID={{ item.uuid }}"
+    fstype: "{{ item.type}}"
+    state: mounted
+    opts: nofail,defaults
+  loop: "{{ external_storage }}"
+  when: external_storage is defined
+
+- name: set permisions on mount points
+  file:
+    state: directory
+    owner: "{{ new_admin_user }}"
+    mode: "0777"
+    path: "{{ item.mount_point }}"
+  loop: "{{ external_storage }}"
+  when: external_storage is defined
+ 
+

@@ -1,0 +1,11 @@
+---
+# Turns a raspberry pi into a docker server. Installs docker, adds user to docker group, and if a stick is mounted in the pi tells docker to save data there.
+- name: Prepare docker server
+  hosts: stanley_pi
+  become: True
+  vars_files:
+    - ../secrets.yml
+
+  roles: 
+    - rpi_docker_server
+...

@@ -1,0 +1,85 @@
+- name: Install docker
+  include_role:
+    name: rpi_docker_server
+
+- name: Create nextcloud docker file folder
+  file:
+    path: /etc/docker/nextcloud
+    state: directory
+    mode: "0755"
+
+- name: Copy docker compose file
+  copy:
+    src: nextcloud_docker-compose.yml
+    dest: /etc/docker/nextcloud/nextcloud_docker-compose.yml
+    owner: "{{user}}"
+    group: docker
+    mode: "0644"
+
+- name: Copy environment file
+  template:
+    src: nextcloud.env
+    dest: /etc/docker/nextcloud/nextcloud.env
+    owner: "{{user}}"
+    group: docker
+    mode: "0644"
+
+- name: Create Nginx docker network
+  docker_network:
+    name: nginx-proxy
+    
+- name: Copy start script
+  copy:
+    src: nextcloud_start.sh
+    dest: /etc/docker/nextcloud/nextcloud_start.sh
+    owner: "{{user}}"
+    group: docker
+    mode: "0755"
+
+- name: Create start script alias
+  lineinfile:
+    path: /etc/bash.bashrc
+    line: alias nextcloud_start='bash /etc/docker/nextcloud/nextcloud_start.sh'
+    state: present
+
+- name: Copy stop script
+  copy:
+    src: nextcloud_stop.sh
+    dest: /etc/docker/nextcloud/nextcloud_stop.sh
+    owner: "{{user}}"
+    group: docker
+    mode: "0755"
+
+- name: Create stop script alias
+  lineinfile:
+    path: /etc/bash.bashrc
+    line: alias nextcloud_stop='bash /etc/docker/nextcloud/nextcloud_stop.sh'
+    state: present
+
+- name: Copy delete script
+  copy:
+    src: nextcloud_delete.sh
+    dest: /etc/docker/nextcloud/nextcloud_delete.sh
+    owner: "{{user}}"
+    group: docker
+    mode: "0755"
+
+- name: Create delete script alias
+  lineinfile:
+    path: /etc/bash.bashrc
+    line: alias nextcloud_delete='bash /etc/docker/nextcloud/nextcloud_delete.sh'
+    state: present
+
+- name: Enable ports for http/https
+  ufw:
+    rule: allow
+    port: "{{ item }}"
+  loop:
+    - "80"
+    - "443"
+
+- name: Stop nextcloud containers
+  shell: bash /etc/docker/nextcloud/nextcloud_stop.sh
+  
+- name: Start nextcloud containers
+  shell: bash /etc/docker/nextcloud/nextcloud_start.sh

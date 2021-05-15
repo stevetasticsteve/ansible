@@ -1,0 +1,32 @@
+---
+# Play uses docker to start a nextcloud server. If the host has a uuid defined for external storage it will be mounted and used as the docker volume directory
+- name: Start nextcloud server
+  hosts: stanley_pi
+  become: True
+  vars_files:
+    - ../secrets.yml
+  vars:
+   - ip_address: 192.168.0.6
+     
+  pre_tasks:
+    - name: mount external storage
+      mount:
+        path: "{{ HD_mount }}"
+        src: "UUID={{ HD_uid }}"
+        fstype: "{{ HD_format }}"
+        state: mounted
+        opts: nofail,defaults
+      when: HD_uid is defined
+
+    - name: set mount permissions
+      file:
+        path: /mnt/external
+        owner: "{{ user }}"
+        mode: "0777"
+        state: directory
+        
+  roles: 
+    - nextcloud_server
+  
+
+...

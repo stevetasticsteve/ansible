@@ -1,0 +1,33 @@
+---
+# This play needs to be run using the new_pi_hosts inventory file
+# - Creates new admin user and optional additional users
+# - removes pi user
+# - installs SSH keys, denies password ssh
+# - updates system and installs a few packages
+# - sets a static IP on eth0
+# - sets hostname
+# - enables firewall
+# - mounts external storage (optional)
+ 
+- name: init_pi
+  vars_files:
+    - ~/Documents/Computing/Ansible/secrets.yml
+    
+  vars:
+    - new_admin_user: steve
+    - new_admin_password: "{{ stanley_pi_password }}"
+    - new_admin_ssh_key: "steve_ssh.pub"
+    - static_ip: 192.168.0.100
+    - hostname: stanley-pi
+    - external_storage:
+        - { mount_point: "/mnt/disk1", uuid: "8bceca6d-0f37-4259-9540-548c1dbfde2d", type: "ext4" }
+        - { mount_point: "/mnt/disk2", uuid: "ecbe62ca-c830-4d8c-9515-a0e10cc83474", type: "ext4" }
+    - additional_users:
+        - { name: gerdine, password: "{{ gerdine_laptop_password }}", key: "{{ lookup('file', 'gerdine_ssh.pub') }}", groups: sudo}
+
+  hosts: stanley_pi
+  become: True
+
+  roles:
+   - raspberrypi_bootstrap
+...

@@ -1,0 +1,2 @@
+[new_pi]
+192.168.0.6	ansible_user=pi	ansible_password=raspberry ansible_python_interpreter=/usr/bin/python3

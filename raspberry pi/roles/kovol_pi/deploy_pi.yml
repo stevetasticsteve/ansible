@@ -8,40 +8,40 @@
   become: true
   
   tasks:
-    - name: Enable SSH keys
-      authorized_key:
-        user: "{{ user }}"
-        state: present
-        key: "{{ item }}"
-      with_file:
-       - ./files/steve_ssh.pub
-       - ./files/gerdine_ssh.pub
-       - ./files/philip_ssh.pub
+    # - name: Enable SSH keys
+    #   authorized_key:
+    #     user: "{{ user }}"
+    #     state: present
+    #     key: "{{ item }}"
+    #   with_file:
+    #    - ./files/steve_ssh.pub
+    #    - ./files/gerdine_ssh.pub
+    #    - ./files/philip_ssh.pub
 
-    - name: disable ssh login for user pi
-      lineinfile:
-        dest=/etc/ssh/sshd_config
-        line="DenyUsers pi"
-        state=present
-      notify:
-       - Restart SSH
+    # - name: disable ssh login for user pi
+    #   lineinfile:
+    #     dest=/etc/ssh/sshd_config
+    #     line="DenyUsers pi"
+    #     state=present
+    #   notify:
+    #    - Restart SSH
 
-    - name: remove pi user
-      user:
-        name: pi
-        state: absent
-        remove: yes
+    # - name: remove pi user
+    #   user:
+    #     name: pi
+    #     state: absent
+    #     remove: yes
 
-    - name: Set hostname
-      hostname:
-        name: "{{ hostname }}"
+    # - name: Set hostname
+    #   hostname:
+    #     name: "{{ hostname }}"
   
-    - name: Set static IP on eth0
-      template:
-        src: ./templates/dhcpcd.j2
-        dest: /etc/dhcpcd.conf
-        owner: root
-        mode: "0664"
+    # - name: Set static IP on eth0
+    #   template:
+    #     src: ./templates/dhcpcd.j2
+    #     dest: /etc/dhcpcd.conf
+    #     owner: root
+    #     mode: "0664"
 
     - name: Set hosts file
       template:
@@ -50,15 +50,15 @@
         owner: root
         mode: "0644"
 
-    - name: Update cache
-      apt:
-        update_cache: yes
-      when: online
+    # - name: Update cache
+    #   apt:
+    #     update_cache: yes
+    #   when: online
 
-    - name: Upgrade all packages
-      apt:
-        upgrade: dist
-      when: online
+    # - name: Upgrade all packages
+    #   apt:
+    #     upgrade: dist
+    #   when: online
 
     - name: Install new packages
       apt:
@@ -66,24 +66,24 @@
         state: present
       when: online
       loop:
-        - git
+        # - git
         - apache2
         - samba
-        - duplicity
-        - ufw
-        - python3-pip
+        # - duplicity
+        # - ufw
+        - python3-pip 
         - libopenjp2-7
         - libtiff5
         - libxslt-dev
         
 
-    - name: Enable firewall
-      ufw:
-        state: enabled
-        rule: allow
-        name: "{{ item }}"
-      loop:
-        - ssh
+    # - name: Enable firewall
+    #   ufw:
+    #     state: enabled
+    #     rule: allow
+    #     name: "{{ item }}"
+    #   loop:
+    #     - ssh
         - samba
     - name: Enable ports for http/https
       ufw:
@@ -93,16 +93,16 @@
        - "80"
        - "443"
        
-    - name: mount NAS sticks
-      mount:
-        path: "{{ item.mount_point }}"
-        src: "{{ item.uuid }}"
-        fstype: ntfs
-        state: mounted
-        opts: nofail,defaults
-      loop:
-        - { mount_point: "{{ nas_mount_point }}", uuid: "{{ stick1_uuid }}" }
-        - { mount_point: "{{ nas_backup_mount_point }}", uuid: "{{ stick2_uuid }}" }
+    # - name: mount NAS sticks
+    #   mount:
+    #     path: "{{ item.mount_point }}"
+    #     src: "{{ item.uuid }}"
+    #     fstype: ntfs
+    #     state: mounted
+    #     opts: nofail,defaults
+    #   loop:
+    #     - { mount_point: "{{ nas_mount_point }}", uuid: "{{ stick1_uuid }}" }
+    #     - { mount_point: "{{ nas_backup_mount_point }}", uuid: "{{ stick2_uuid }}" }
         
     - name: Add samba configuration
       template:
