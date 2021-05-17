@@ -34,21 +34,21 @@
    groups: docker
    append: yes
 
-- name: Create docker-data folder if external storage is used
-  file:
-    path: "{{ HD_mount }}/docker-data"
-    state: directory
-    mode: "0664"
-    group: docker
-  when: HD_uid is defined
+# - name: Create docker-data folder if external storage is used
+#   file:
+#     path: "{{ HD_mount }}/docker-data"
+#     state: directory
+#     mode: "0664"
+#     group: docker
+#   when: HD_uid is defined
 
-- name: Change docker volume location
-  template:
-    src: daemon.json
-    dest: /etc/docker
-    owner: "{{user}}"
-    group: docker
-    mode: "0644"
-  notify: 
-    - restart Docker
-  when: HD_uid is defined
+# - name: Change docker volume location
+#   template:
+#     src: daemon.json
+#     dest: /etc/docker
+#     owner: "{{user}}"
+#     group: docker
+#     mode: "0644"
+#   notify: 
+#     - restart Docker
+#   when: HD_uid is defined

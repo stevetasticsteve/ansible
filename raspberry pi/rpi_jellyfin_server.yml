@@ -1,0 +1,14 @@
+---
+# Play uses docker to start a nextcloud server. If the host has a uuid defined for external storage it will be mounted and used as the docker volume directory
+- name: Start Jellyfin server
+  hosts: stanley_pi
+  become: True
+  vars_files:
+    - ../secrets.yml
+
+  roles: 
+    # - rpi_docker_server
+    - rpi_jellyfin_server
+  
+
+...

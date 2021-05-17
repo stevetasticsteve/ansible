@@ -1,0 +1,33 @@
+- name: Create media folder
+  file:
+    path: "/home/{{user}}/Videos"
+    state: directory
+    owner: "{{ user }}"
+    mode: "0775"
+
+- name: Create jellyfin config folder
+  file:
+    path: /home/steve/.jellyfin-conf
+    state: directory
+    owner: "{{ user }}"
+    mode: "0775"
+
+- name: Create jellyfin cache folder
+  file:
+    path: "/home/{{user}}/.jellyfin-cache"
+    state: directory
+    owner: "{{ user }}"
+    mode: "0775"
+
+- name: Move over docker file
+  copy:
+    src: jellyfin_docker-compose.yml
+    dest: "/home/{{user}}/jellyfin_docker-compose.yml"
+    owner: "{{ user }}"
+    mode: "0664"
+
+- name: stop Jellyfin
+  shell: docker stop jellyfin && docker rm jellyfin
+
+- name: start Jellyfin
+  shell: docker-compose -f "/home/{{user}}/jellyfin_docker-compose.yml" up -d

@@ -55,13 +55,6 @@
     upgrade: dist
     update_cache: yes
 
-- name: Set static IP on eth0
-  template:
-    src: dhcpcd.j2
-    dest: /etc/dhcpcd.conf
-    owner: root
-    mode: "0664"
-
 - name: Set hostname
   hostname:
     name: "{{ hostname }}"
@@ -79,17 +72,22 @@
   apt:
     name: ufw
     state: present
-  register: ufw_install
+  #notify: reboot
 
-- name: reboot for ufw
-  reboot:
-  when: ufw_install.changed
+- name: Set static IP on eth0
+  template:
+    src: dhcpcd.j2
+    dest: /etc/dhcpcd.conf
+    owner: root
+    mode: "0664"
+  notify: reboot
 
 - name: Enable firewall
   ufw:
     state: enabled
     rule: allow
     name: ssh
+
 
 - name: mount external storage
   mount:
