@@ -1,0 +1,23 @@
+---
+# Create a rpi Jellyfin server
+ 
+- name: Video box
+  vars_files:
+    - ~/Documents/Computing/Ansible/secrets.yml
+    
+  vars:
+    - new_admin_user: steve
+    - new_admin_password: "{{ stanley_pi_password }}"
+    - new_admin_ssh_key: "steve_ssh.pub"
+    - static_ip: 192.168.0.6
+    #- gateway: 192.168.0.1
+    - hostname: video-box
+
+  hosts: stanley_pi
+  become: True
+
+  roles:
+   - rpi_bootstrap
+   - rpi_docker_server
+   - rpi_jellyfin_server
+...

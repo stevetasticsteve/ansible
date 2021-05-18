@@ -3,7 +3,8 @@
    name: "{{ new_admin_user }}"
    shell: /bin/bash
    password: "{{ new_admin_password | password_hash('sha512')}}"
-   groups: sudo
+   groups: 
+   - sudo
    append: yes
    update_password: on_create
    state: present
@@ -15,6 +16,28 @@
     state: present
   with_file:
    - steve_ssh.pub
+
+- name: Update system
+  apt:
+    upgrade: dist
+    update_cache: yes
+
+- name: Install ufw
+  apt:
+    name: ufw
+    state: present
+  notify: reboot
+
+- name: Set static IP on eth0
+  template:
+    src: dhcpcd.j2
+    dest: /etc/dhcpcd.conf
+    owner: root
+    mode: "0664"
+  notify: reboot
+
+- name: Execute handlers
+  meta: flush_handlers
 
 - name: change user
   set_fact:
@@ -37,7 +60,8 @@
    name: "{{ item.name }}"
    shell: /bin/bash
    password: "{{ item.password | password_hash('sha512')}}"
-   groups: "{{ item.groups }}"
+   groups: 
+   - "{{ item.groups }}"
    append: yes
    update_password: on_create
   loop: "{{ additional_users }}"
@@ -49,11 +73,7 @@
     key: "{{ item.key }}"
     state: present
   with_items: "{{ additional_users }}"
-
-- name: Update system
-  apt:
-    upgrade: dist
-    update_cache: yes
+  when: additional_users is defined
 
 - name: Set hostname
   hostname:
@@ -66,28 +86,12 @@
   loop:
     - git
     - duplicity
-    #- cockpit
-
-- name: Install ufw
-  apt:
-    name: ufw
-    state: present
-  #notify: reboot
-
-- name: Set static IP on eth0
-  template:
-    src: dhcpcd.j2
-    dest: /etc/dhcpcd.conf
-    owner: root
-    mode: "0664"
-  notify: reboot
 
 - name: Enable firewall
   ufw:
     state: enabled
     rule: allow
     name: ssh
-
 
 - name: mount external storage
   mount:

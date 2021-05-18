@@ -26,8 +26,10 @@
     owner: "{{ user }}"
     mode: "0664"
 
-- name: stop Jellyfin
-  shell: docker stop jellyfin && docker rm jellyfin
+- name: remove existing Jellyfin container
+  docker_container:
+    name: jellyfin
+    state: absent
 
 - name: start Jellyfin
   shell: docker-compose -f "/home/{{user}}/jellyfin_docker-compose.yml" up -d
