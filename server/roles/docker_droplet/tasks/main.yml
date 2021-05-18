@@ -3,7 +3,9 @@
    name: "{{ username }}"
    shell: /bin/bash
    password: "{{ password | password_hash('sha512')}}"
-   groups: sudo,docker
+   groups: 
+    - sudo
+    - docker
    append: yes
 
 - name: Authorize SSH keys
