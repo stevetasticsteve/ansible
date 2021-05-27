@@ -1,0 +1,11 @@
+- name: Update machines
+  hosts: all
+  become: True
+  vars_files:
+    - ./secrets.yml
+
+  tasks:
+    - name: Apt update
+      apt:
+        update_cache: yes
+        upgrade: dist

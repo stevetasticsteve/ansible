@@ -1,6 +1,0 @@
-#!/usr/bin/python3
-
-import subprocess
-
-cmd = 'cd {{CLAHub_folder}}; source venv/bin/activate; python manage.py collectstatic'
-subprocess.call(cmd, shell=True, executable='/bin/bash')

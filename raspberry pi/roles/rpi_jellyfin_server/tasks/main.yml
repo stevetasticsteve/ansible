@@ -12,6 +12,14 @@
     owner: "{{ user }}"
     mode: "0775"
 
+- name: Enable ports for http/https
+  ufw:
+    rule: allow
+    port: "{{ item }}"
+  loop:
+    - "80"
+    - "443"
+
 - name: Create jellyfin cache folder
   file:
     path: "/home/{{user}}/.jellyfin-cache"

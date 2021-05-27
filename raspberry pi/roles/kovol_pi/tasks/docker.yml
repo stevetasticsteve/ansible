@@ -1,0 +1,28 @@
+- name: Enable ports for http
+  ufw:
+    rule: allow
+    port: "80"
+
+- name: Move over docker-compose file
+  copy:
+    src: kovol_server_docker-compose.yml
+    dest: /etc/docker/kovol_server_docker-compose.yml
+    mode: "0664"
+    owner: "{{ user }}"
+
+- name: Move over environment file
+  copy:
+    src: nextcloud.env
+    dest: /etc/docker/nextcloud.env
+    mode: "0664"
+    owner: "{{ user }}"
+
+- name: Move over nginx.conf
+  copy:
+      src: nginx.conf
+      dest: /etc/docker/nginx.conf
+      mode: "0664"
+      owner: "{{ user }}"
+
+- name: Start docker services
+  shell: docker-compose --env /etc/docker/nextcloud.env -f /etc/docker/kovol_server_docker-compose.yml down; docker-compose --env /etc/docker/nextcloud.env -f /etc/docker/kovol_server_docker-compose.yml -d up

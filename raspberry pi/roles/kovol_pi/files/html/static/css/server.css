@@ -1,0 +1,32 @@
+#main{
+    text-align: center;
+    padding: 0.5em;
+    margin-left: 1em;
+}
+
+#grid{
+    display: flex;
+    flex-wrap: wrap;
+    flex-basis: 400px;
+    justify-content: space-around;
+    align-self: center;
+}
+
+.grid-div{
+    /* border: 1px rgb(0, 0, 0) solid; */
+    padding: 2em;
+    margin-bottom: 0.5em;
+    /* width: 30%; */
+}
+
+h1{
+    color: rgb(9, 17, 129);
+}
+
+img{
+    max-width: 400px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    
+}

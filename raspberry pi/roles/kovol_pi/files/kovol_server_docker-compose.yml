@@ -1,0 +1,87 @@
+version: "3.9"
+
+services:
+    nginx:
+        container_name: nginx
+        image: nginx
+        restart: unless-stopped
+        volumes:
+            - /html/:/etc/nginx/html:ro
+            - /etc/docker/nginx.conf:/etc/nginx/nginx.conf:ro
+        ports:
+            - 80:80
+        networks:
+            - nginx
+
+    clahub:
+        container_name: clahub
+        image: stevetasticsteve/clahub:arm
+        restart: unless-stopped
+        volumes:
+            - clahub:/code/data
+        ports:
+            - 8000:8000
+        networks:
+            - nginx
+        
+    nextcloud_db:
+        image: postgres
+        container_name: nextcloud_postgres
+        restart: always
+        volumes:
+            - nextcloud_db:/var/lib/postgresql/data
+            - nextcloud_data:/var/www/html
+        environment:
+            - POSTGRES_DB=postgres
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+        networks:
+        -   nextcloud
+
+    nextcloud:
+        image: nextcloud
+        container_name: nextcloud
+        restart: unless-stopped
+        volumes:
+            - nextcloud_data:/var/www/html
+        ports:
+            - 8080:80
+        environment:
+            - POSTGRES_HOST=nextcloud_db
+            - POSTGRES_DB=postgres
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
+            - NEXTCLOUD_ADMIN_PASSWORD=${NEXTCLOUD_PASSWORD}
+            - NEXTCLOUD_ADMIN_USER=${NEXTCLOUD_USER}
+
+            - REDIS_HOST=nextcloud_redis
+        networks:
+            - nextcloud
+            - nginx
+        depends_on:
+            - nextcloud_db
+
+    redis:
+        image: redis
+        container_name: nextcloud_redis
+        volumes:
+            - nextcloud_redis:/data
+        networks:
+            - nextcloud
+
+volumes:
+    clahub:
+        name: clahub    
+    nextcloud_db:
+        name: nextcloud_db
+    nextcloud_data:
+        name: nextcloud_data
+    nextcloud_redis:
+        name: nextcloud_redis
+
+networks:
+    nginx:
+        driver: bridge
+    nextcloud:
+        driver: bridge

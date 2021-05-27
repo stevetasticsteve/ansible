@@ -1,0 +1,44 @@
+- name: Set hosts file
+  template:
+    src: hosts.j2
+    dest: /etc/hosts
+    owner: root
+    mode: "0644"
+
+- name: Configure docker nextcloud and CLAHub
+  include_tasks: docker.yml
+
+- name: Create html folder
+  copy:
+    src: html
+    mode: "0777"
+    owner: "{{ user }}"
+    path: /html
+
+# - name: Create Bootstrap folder
+#   file:
+#     path: "/html/static/bootstrap"
+#     state: directory
+#     mode: "0777"
+#     owner: "{{ user }}"
+        
+- name: extract bootstrap
+  unarchive:
+    src: bootstrap.zip
+    dest: "/html/static/bootstrap"
+    owner: "{{ user }}"
+    mode: "0777"
+
+# - name: Create Jquery folder
+#   file:
+#     path: "/html/static/jquery"
+#     state: directory
+#     mode: "0777"
+#     owner: "{{ user }}"
+        
+- name: extract jquery
+  unarchive:
+    src: jquery.zip
+    dest: "/html/static/jquery"
+    owner: "{{ user }}"
+    mode: "0777"

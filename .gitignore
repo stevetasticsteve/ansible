@@ -1,3 +1,11 @@
 raspberry pi/roles/rpi_bootstrap/templates/wpa_supplicant.conf
 hosts.yml
 secrets.yml
+old_config/apache_conf.j2
+old_config/CLAHub_environment_vars.j2
+old_config/CLAHub_init.j2
+old_config/CLAHub_service.j2
+old_config/CLAHub_update.j2
+old_config/dhcpcd.j2
+old_config/restart_services.j2
+old_config/no_auth_samba.j2

@@ -1,0 +1,27 @@
+---
+# Turns a raspberry pi into a docker server. Installs docker, adds user to docker group, and if a stick is mounted in the pi tells docker to save data there.
+- name: Set up Kovol pi
+  hosts: kovol_pi
+  become: True
+  vars_files:
+    - ../secrets.yml
+  vars:
+    - new_admin_user:
+        - { name: steve, password: "{{ steve_laptop_password }}", key: "{{ lookup('file', 'steve_ssh.pub') }}", groups: sudo}
+    - static_ip: 192.168.0.100
+    - hostname: kovol-pi
+    - external_storage:
+        - { mount_point: "/mnt/disk1", uuid: "8bceca6d-0f37-4259-9540-548c1dbfde2d", type: "ext4" }
+        - { mount_point: "/mnt/disk2", uuid: "ecbe62ca-c830-4d8c-9515-a0e10cc83474", type: "ext4" }
+    - additional_users:
+        - { name: gerdine, password: "{{ gerdine_laptop_password }}", key: "{{ lookup('file', 'gerdine_ssh.pub') }}", groups: sudo}
+        - { name: philip, password: "{{ philip_password }}", key: "{{ lookup('file', 'philip_ssh.pub') }}", groups: sudo}
+  
+    - remote_backup_ip_address: 192.168.0.101
+    - remote_backup_hostname: backup_pi
+
+  roles: 
+    - rpi_bootstrap
+    - rpi_docker_server
+    - kovol_pi
+...

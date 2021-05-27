@@ -1,3 +1,3 @@
 {
-    "data-root": "{{ HD_mount }}/docker-data"
+    "data-root": "{{ external_storage[0].mount_point }}/docker-data"
 }
