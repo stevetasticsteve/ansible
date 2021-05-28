@@ -71,7 +71,7 @@
     #     - samba
     #     # - duplicity
     #     # - ufw
-    #     - python3-pip 
+    #     #- python3-pip 
     #     - libopenjp2-7
     #     - libtiff5
     #     - libxslt-dev
@@ -114,25 +114,25 @@
     #   notify:
     #     - Restart Samba
         
-    - name: Create code folder
-      file:
-        path: "{{ code_folder }}"
-        state: directory
-        mode: "0777"
+    # - name: Create code folder
+    #   file:
+    #     path: "{{ code_folder }}"
+    #     state: directory
+    #     mode: "0777"
 
-    - name: Create code/backup folder
-      file:
-        path: "{{ code_folder }}/backup"
-        state: directory
-        mode: "0777"
-        owner: "{{ user }}"
+    # - name: Create code/backup folder
+    #   file:
+    #     path: "{{ code_folder }}/backup"
+    #     state: directory
+    #     mode: "0777"
+    #     owner: "{{ user }}"
 
-    - name: Create log folder
-      file:
-        path: "/home/{{ user }}/server_logs"
-        state: directory
-        owner: "{{ user }}"
-        mode: "0777"
+    # - name: Create log folder
+    #   file:
+    #     path: "/home/{{ user }}/server_logs"
+    #     state: directory
+    #     owner: "{{ user }}"
+    #     mode: "0777"
 
     - name: Add backup script
       template:
@@ -299,35 +299,35 @@
     #   notify:
     #    - Restart Apache
        
-    - name: Download Lexicon code
-      git:
-        repo: https://github.com/stevetasticsteve/Lexicon
-        dest: "{{ code_folder }}/Lexicon"
-        version: master
-        force: yes
-      when: online
+    # - name: Download Lexicon code
+    #   git:
+    #     repo: https://github.com/stevetasticsteve/Lexicon
+    #     dest: "{{ code_folder }}/Lexicon"
+    #     version: master
+    #     force: yes
+    #   when: online
 
-    - name: Create Lexicon virtual environment
-      pip:
-        requirements: "{{ code_folder }}/Lexicon/requirements.txt"
-        virtualenv: "{{ code_folder}}/Lexicon/venv"
-      when: online
+    # - name: Create Lexicon virtual environment
+    #   pip:
+    #     requirements: "{{ code_folder }}/Lexicon/requirements.txt"
+    #     virtualenv: "{{ code_folder}}/Lexicon/venv"
+    #   when: online
 
-    - name: Set Lexicon config
-      template:
-        src: ./templates/lexicon_config.j2
-        dest: "{{ code_folder }}/Lexicon/lexicon_config.py"
-        mode: "0755"
-        user: "{{ user }}"
+    # - name: Set Lexicon config
+    #   template:
+    #     src: ./templates/lexicon_config.j2
+    #     dest: "{{ code_folder }}/Lexicon/lexicon_config.py"
+    #     mode: "0755"
+    #     user: "{{ user }}"
 
-    - name: Schedule Lexicon update
-      cron:
-        name: Lexicon update
-        user: "{{ user }}"
-        state: present
-        job: "bash {{ code_folder }}/Lexicon/run_lexicon.sh"
-        minute: "20"
-        hour: "0"
+    # - name: Schedule Lexicon update
+    #   cron:
+    #     name: Lexicon update
+    #     user: "{{ user }}"
+    #     state: present
+    #     job: "bash {{ code_folder }}/Lexicon/run_lexicon.sh"
+    #     minute: "20"
+    #     hour: "0"
 
     # - name: Set Apache folder owner
     #   file:
@@ -367,39 +367,39 @@
         job: "python3 {{ code_folder }}/server_health.py"
         minute: "55"
         
-    - name: Download text code
-      git:
-        repo: https://github.com/stevetasticsteve/text_interlinear
-        dest: "{{ code_folder }}/texts"
-        version: master
-        force: yes
-      when: online
+    # - name: Download text code
+    #   git:
+    #     repo: https://github.com/stevetasticsteve/text_interlinear
+    #     dest: "{{ code_folder }}/texts"
+    #     version: master
+    #     force: yes
+    #   when: online
         
-    - name: Install text script dependencies
-      pip:
-        requirements: "{{ code_folder }}/texts/requirements.txt"
-        virtualenv: "{{ code_folder }}/texts/venv"
-      when: online
+    # - name: Install text script dependencies
+    #   pip:
+    #     requirements: "{{ code_folder }}/texts/requirements.txt"
+    #     virtualenv: "{{ code_folder }}/texts/venv"
+    #   when: online
         
-    - name: Set text script settings
-      template:
-        src: "./templates/interlinear_settings.j2"
-        dest: "{{ code_folder }}/texts/settings.py"
-        mode: "0755"
+    # - name: Set text script settings
+    #   template:
+    #     src: "./templates/interlinear_settings.j2"
+    #     dest: "{{ code_folder }}/texts/settings.py"
+    #     mode: "0755"
         
-    - name: Schedule text update
-      cron:
-        name: Texts update
-        user: "{{ user }}"
-        state: present
-        job: "bash {{ code_folder }}/texts/run_interlinear.sh"
-        minute: "20,40"
+    # - name: Schedule text update
+    #   cron:
+    #     name: Texts update
+    #     user: "{{ user }}"
+    #     state: present
+    #     job: "bash {{ code_folder }}/texts/run_interlinear.sh"
+    #     minute: "20,40"
         
-    - name: Add symlink for text audio
-      file:
-        src: "{{ texts_source }}/audio"
-        dest: "{{ apache_folder }}/texts/audio"
-        state: link
+    # - name: Add symlink for text audio
+    #   file:
+    #     src: "{{ texts_source }}/audio"
+    #     dest: "{{ apache_folder }}/texts/audio"
+    #     state: link
 
   # handlers:
   #   - name: Restart SSH

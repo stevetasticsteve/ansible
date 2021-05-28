@@ -8,37 +8,18 @@
 - name: Configure docker nextcloud and CLAHub
   include_tasks: docker.yml
 
-- name: Create html folder
-  copy:
-    src: html
-    mode: "0777"
-    owner: "{{ user }}"
-    path: /html
+- name: Copy static html folder
+  include_tasks: static_html.yml
 
-# - name: Create Bootstrap folder
-#   file:
-#     path: "/html/static/bootstrap"
-#     state: directory
-#     mode: "0777"
-#     owner: "{{ user }}"
-        
-- name: extract bootstrap
-  unarchive:
-    src: bootstrap.zip
-    dest: "/html/static/bootstrap"
-    owner: "{{ user }}"
+- name: Create code folder
+  file:
+    state: directory
+    path: "/code/logs"
     mode: "0777"
+    owner: "{{ user }}"
 
-# - name: Create Jquery folder
-#   file:
-#     path: "/html/static/jquery"
-#     state: directory
-#     mode: "0777"
-#     owner: "{{ user }}"
-        
-- name: extract jquery
-  unarchive:
-    src: jquery.zip
-    dest: "/html/static/jquery"
-    owner: "{{ user }}"
-    mode: "0777"
+- name: Install Lexicon
+  include_tasks: lexicon.yml
+
+- name: Install Interlinear
+  include_tasks: interlinear.yml

@@ -1,13 +1,12 @@
 ---
 # Turns a raspberry pi into a docker server. Installs docker, adds user to docker group, and if a stick is mounted in the pi tells docker to save data there.
 - name: Set up Kovol pi
-  hosts: kovol_pi
+  hosts: stanley_pi
   become: True
   vars_files:
     - ../secrets.yml
   vars:
-    - new_admin_user:
-        - { name: steve, password: "{{ steve_laptop_password }}", key: "{{ lookup('file', 'steve_ssh.pub') }}", groups: sudo}
+    - new_admin_user: { name: steve, password: "{{ steve_laptop_password }}", key: "{{ lookup('file', 'steve_ssh.pub') }}", groups: sudo}
     - static_ip: 192.168.0.100
     - hostname: kovol-pi
     - external_storage:
@@ -19,9 +18,12 @@
   
     - remote_backup_ip_address: 192.168.0.101
     - remote_backup_hostname: backup_pi
+      
+    # Nextcloud needs a space seperated list of ip addresses to serve from
+    - allowed_ips: "{{ static_ip }} 192.168.0.6"
 
   roles: 
-    - rpi_bootstrap
-    - rpi_docker_server
+    #- rpi_bootstrap
+    #- rpi_docker_server
     - kovol_pi
 ...

@@ -1,0 +1,27 @@
+- name: Download Lexicon code
+  git:
+    repo: https://github.com/stevetasticsteve/Lexicon
+    dest: "/code/lexicon"
+    version: master
+    force: yes
+
+- name: Create Lexicon virtual environment
+  pip:
+    requirements: "/code/lexicon/requirements.txt"
+    virtualenv: "/code/lexicon/venv"
+    virtualenv_command: python3 -m venv
+    
+- name: Set Lexicon config
+  copy:
+    src: lexicon_config.j2
+    dest: "/code/lexicon/lexicon_config.py"
+    mode: "0755"
+    owner: "{{ user }}"
+
+- name: Schedule Lexicon update
+  cron:
+    name: Lexicon update
+    state: present
+    job: "bash /code/lexicon/run_lexicon.sh"
+    minute: "20"
+    hour: "0"

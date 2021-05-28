@@ -84,6 +84,11 @@
   loop:
     - git
     - duplicity
+    - python3-pip
+    - python3-distutils
+    - python3-psutil
+    - python3-venv
+
 
 - name: Enable firewall
   ufw:

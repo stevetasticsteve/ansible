@@ -11,7 +11,7 @@
     owner: "{{ user }}"
 
 - name: Move over environment file
-  copy:
+  template:
     src: nextcloud.env
     dest: /etc/docker/nextcloud.env
     mode: "0664"
@@ -24,5 +24,9 @@
       mode: "0664"
       owner: "{{ user }}"
 
+- name: Stop docker services
+  shell: docker-compose --env /etc/docker/nextcloud.env -f /etc/docker/kovol_server_docker-compose.yml down
+  ignore_errors: yes
+
 - name: Start docker services
-  shell: docker-compose --env /etc/docker/nextcloud.env -f /etc/docker/kovol_server_docker-compose.yml down; docker-compose --env /etc/docker/nextcloud.env -f /etc/docker/kovol_server_docker-compose.yml -d up
+  shell: docker-compose --env /etc/docker/nextcloud.env -f /etc/docker/kovol_server_docker-compose.yml up -d

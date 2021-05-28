@@ -1,0 +1,32 @@
+- name: Download text code
+  git:
+    repo: https://github.com/stevetasticsteve/text_interlinear
+    dest: "/code/texts"
+    version: master
+    force: yes
+    
+- name: Install text script dependencies
+  pip:
+    requirements: "/code/texts/requirements.txt"
+    virtualenv: "/code/texts/venv"
+    virtualenv_command: python3 -m venv
+    
+- name: Set text script settings
+  copy:
+    src: "interlinear_settings.py"
+    dest: "/code/texts/settings.py"
+    mode: "0755"
+    owner: "{{ user }}"
+    
+- name: Schedule text update
+  cron:
+    name: Texts update
+    state: present
+    job: "bash /code/texts/run_interlinear.sh"
+    minute: "20,40"
+    
+# - name: Add symlink for text audio
+#   file:
+#     src: "{{ texts_source }}/audio"
+#     dest: "{{ apache_folder }}/texts/audio"
+#     state: link
