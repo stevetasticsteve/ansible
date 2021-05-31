@@ -100,7 +100,7 @@
   mount:
     path: "{{ item.mount_point }}"
     src: "UUID={{ item.uuid }}"
-    fstype: "{{ item.type}}"
+    fstype: "{{ item.type }}"
     state: mounted
     opts: nofail,defaults
   loop: "{{ external_storage }}"

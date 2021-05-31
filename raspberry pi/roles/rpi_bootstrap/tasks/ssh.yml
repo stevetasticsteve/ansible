@@ -29,3 +29,11 @@
    regexp: '^#PermitRootLogin'
   notify:
     - Restart SSH
+
+- name: Tweak random thing to make it work
+  lineinfile:
+   path: /etc/ssh/sshd_config
+   line: IPQoS cs0 cs0
+   state: present
+  notify:
+    - Restart SSH
