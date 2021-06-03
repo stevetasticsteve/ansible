@@ -26,3 +26,6 @@
 
 - name: Set backup
   include_tasks: backup.yml
+
+- name: Set up server check
+  include_tasks: health_check.yml
