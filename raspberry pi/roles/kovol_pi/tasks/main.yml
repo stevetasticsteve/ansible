@@ -8,8 +8,8 @@
 - name: Configure docker nextcloud and CLAHub
   include_tasks: docker.yml
 
-- name: Copy static html folder
-  include_tasks: static_html.yml
+# - name: Copy static html folder
+#   include_tasks: static_html.yml
 
 - name: Create code folder
   file:
@@ -23,3 +23,6 @@
 
 - name: Install Interlinear
   include_tasks: interlinear.yml
+
+- name: Set backup
+  include_tasks: backup.yml

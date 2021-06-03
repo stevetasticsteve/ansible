@@ -10,6 +10,31 @@
     requirements: "/code/lexicon/requirements.txt"
     virtualenv: "/code/lexicon/venv"
     virtualenv_command: python3 -m venv
+
+- name: Install system dependency
+  apt:
+      name: libxslt-dev
+      state: present
+
+- name: Symlink the source dictionary
+  file:
+      src: "{{ external_storage[0].mount_point}}/docker-data/volumes/nextcloud_data/_data/data/steve/files/Team Share/lexicon/Kovol_lexicon.ods"
+      dest: /code/lexicon/lexicon.ods
+      owner: "www-data"
+      group: "www-data"
+      mode: "0755"
+      state: link
+      force: yes
+
+- name: Symlink the source verb dictionary
+  file:
+      src: "{{ external_storage[0].mount_point}}/docker-data/volumes/nextcloud_data/_data/data/steve/files/Team Share/lexicon/Kovol_verbs.ods"
+      dest: /code/lexicon/Kovol_verbs.ods
+      owner: "www-data"
+      group: "www-data"
+      mode: "0755"
+      state: link
+      force: yes
     
 - name: Set Lexicon config
   copy:

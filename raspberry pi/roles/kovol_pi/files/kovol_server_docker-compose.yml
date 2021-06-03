@@ -38,6 +38,7 @@ services:
         networks:
         -   nextcloud
 
+
     nextcloud:
         image: nextcloud
         container_name: nextcloud

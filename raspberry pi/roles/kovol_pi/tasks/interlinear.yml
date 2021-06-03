@@ -25,8 +25,21 @@
     job: "bash /code/texts/run_interlinear.sh"
     minute: "20,40"
     
-# - name: Add symlink for text audio
-#   file:
-#     src: "{{ texts_source }}/audio"
-#     dest: "{{ apache_folder }}/texts/audio"
-#     state: link
+- name: Symlink the source xml directory
+  file:
+      src: "{{ external_storage[0].mount_point}}/docker-data/volumes/nextcloud_data/_data/data/steve/files/Team Share/texts/"
+      dest: /code/texts/xml
+      owner: "www-data"
+      group: "www-data"
+      mode: "0755"
+      state: link
+      force: yes
+
+- name: Symlink the source audio directory
+  file:
+      src: "{{ external_storage[0].mount_point}}/docker-data/volumes/nextcloud_data/_data/data/steve/files/Team Share/texts/audio"
+      dest: /code/texts/audio
+      owner: "www-data"
+      group: "www-data"
+      state: link
+      force: yes

@@ -1,5 +1,5 @@
 html_folder = "/html/texts"
 code_folder = "/code/texts"
-audio_folder = "Team Share/Texts/audio"
-xml_folder = "/Team Share/Texts"
-word_list_file = "html/lexicon/word_list.csv"
+audio_folder = "audio"
+xml_folder = "xml"
+word_list_file = "/html/lexicon/word_list.csv"
