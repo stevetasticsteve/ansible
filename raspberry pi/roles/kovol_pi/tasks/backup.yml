@@ -16,6 +16,6 @@
   cron:
     name: Backup
     state: present
-    job: "python3 /code/backup/backup.py"
+    job: "python3 /code/backup/backup.py 2> /code/logs/backup_error.log"
     hour: "3"
     minute: "0"

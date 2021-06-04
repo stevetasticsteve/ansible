@@ -95,16 +95,6 @@ try:
     else:
         ok("CPU usage averaging {p:.2f}%".format(p=cpu))
 
-    # check interface status
-    itf = subprocess.run(["/sbin/ifconfig", "-s"], stdout=PIPE).stdout.decode()
-    if "wlan0" in itf:
-        fail("Wireless interface is on")
-    elif "eth0" not in itf:
-        fail("Wired interface is off")
-
-    else:
-        ok("Network interfaces functioning")
-
     print("\n--- Applications ---")
 
     # check Lexicon log for content
@@ -130,8 +120,18 @@ try:
             fail("Backup didn't sucessfully complete")
         else:
             ok("Backups completed sucessfully")
+
     if in_kovol:
         print("\n--- Backup_pi ---")
+            # check interface status
+        itf = subprocess.run(["/sbin/ifconfig", "-s"], stdout=PIPE).stdout.decode()
+        if "wlan0" in itf:
+            fail("Wireless interface is on")
+        elif "eth0" not in itf:
+            fail("Wired interface is off")
+        else:
+            ok("Network interfaces functioning")
+
         # check connecition to backup_pi
         host = "192.168.0.11"
         response = os.system("ping -qc 1 " + host + " 2>&1 >/dev/null")

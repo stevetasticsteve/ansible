@@ -25,13 +25,13 @@ def initiate_logging(log_file: str):
 
 def stop_containers(compose_files: list):
     for f in compose_files:
-        subprocess.run(["docker-compose", "-f", f["file"], "--env", f["env"], "down"])
+        subprocess.run(["/usr/local/bin/docker-compose", "-f", f["file"], "--env", f["env"], "down"])
 
 
 def start_containers(compose_files: list):
     for f in compose_files:
         subprocess.run(
-            ["docker-compose", "-f", f["file"], "--env", f["env"], "up", "-d"]
+            ["/usr/local/bin/docker-compose", "-f", f["file"], "--env", f["env"], "up", "-d"]
         )
 
 
@@ -81,7 +81,7 @@ if __name__ == "__main__":
         }
     ]
 
-    logger.info("\nBackup started")
+    logger.info("\nBackup started: {t}".format(t=datetime.datetime.now().strftime("%a %d %b, %H:%M")))
     start = datetime.datetime.now()
     print("Starting local backup")
 
