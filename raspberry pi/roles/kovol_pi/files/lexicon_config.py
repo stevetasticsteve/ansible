@@ -3,7 +3,7 @@ settings = {
     'spreadsheet_name': 'lexicon.ods',
     'sheet_name': 'Dictionary',
     'target_folder': '/html/lexicon',
-    'log_file': '/code/logs/lexicon_error.log',
+    'log_file': '/code/logs/lexicon_error.html',
     'bootstrap': '/static/bootstrap',
     'jquery': '/static/jquery',
     'verb_spreadsheet': 'Kovol_verbs.ods',

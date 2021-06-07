@@ -4,6 +4,14 @@
     margin-left: 1em;
 }
 
+#small-links{
+    text-align: left;
+}
+
+li.no-point{
+    list-style: none;
+}
+
 #grid{
     display: flex;
     flex-wrap: wrap;

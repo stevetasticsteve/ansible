@@ -8,6 +8,7 @@ services:
         volumes:
             - /html/:/etc/nginx/html:ro
             - /etc/docker/nginx.conf:/etc/nginx/nginx.conf:ro
+            - /code/logs:/etc/nginx/html/logs:ro
         ports:
             - 80:80
         networks:

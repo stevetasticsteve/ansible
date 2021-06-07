@@ -187,13 +187,8 @@ try:
     print("\n\n--- Summary ---")
     if errors:
         print("There are server erors:")
-        # for error in errors:
-        #     print('	--{e}'.format(e=error))
-        # with open('{{ nas_mount_point }}/Team Share/server_failure.txt', 'w') as file:
-        #     file.write('{date} Server issues detected:\n'.format(
-        #         date=datetime.date.today()))
-        #     file.writelines(errors)
-        #     file.write('\n Check /home/{{user}}/server_logs')
+        for error in errors:
+            print('	--{e}'.format(e=error))
     else:
         print("No problems")
 
@@ -202,10 +197,13 @@ finally:
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
     fh = logging.handlers.RotatingFileHandler("/code/logs/server_health.log")
-    f = logging.Formatter("%(asctime)s %(levelname)-8s %(message)s")
+    f = logging.Formatter("%(message)s")
     fh.setFormatter(f)
     logger.addHandler(fh)
+    time = datetime.datetime.now()
+    logger.info("<span style=\"white-space: pre;\">{d}".format(d=time))
     if errors:
         logger.error("Errors were found: {e}".format(e=errors))
     else:
         logger.info("No problems")
+    logger.info("</span>")

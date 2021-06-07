@@ -80,7 +80,7 @@ if __name__ == "__main__":
             "env": "/etc/docker/nextcloud.env",
         }
     ]
-
+    logger.info("<span style=\"white-space: pre;\">")
     logger.info("\nBackup started: {t}".format(t=datetime.datetime.now().strftime("%a %d %b, %H:%M")))
     start = datetime.datetime.now()
     print("Starting local backup")
@@ -105,3 +105,4 @@ if __name__ == "__main__":
             )
         )
         logger.info("Backup took {t}".format(t=str(finish - start)))
+    logger.info("</span>")
