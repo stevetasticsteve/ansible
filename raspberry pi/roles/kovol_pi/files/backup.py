@@ -71,7 +71,7 @@ def backup(source: str, destination: str):
 
 
 if __name__ == "__main__":
-    logger = initiate_logging(log_file="/code/logs/backup.log")
+    logger = initiate_logging(log_file="/code/logs/backup.html")
     errors = False
 
     compose_files = [

@@ -8,8 +8,8 @@
 - name: Configure docker nextcloud and CLAHub
   include_tasks: docker.yml
 
-# - name: Copy static html folder
-#   include_tasks: static_html.yml
+- name: Copy static html folder
+  include_tasks: static_html.yml
 
 - name: Create code folder
   file:

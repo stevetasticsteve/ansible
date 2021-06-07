@@ -6,9 +6,12 @@ services:
         image: nginx
         restart: unless-stopped
         volumes:
-            - /html/:/etc/nginx/html:ro
             - /etc/docker/nginx.conf:/etc/nginx/nginx.conf:ro
+
+            - /html/:/etc/nginx/html:ro
+            - nextcloud_data:/nextcloud:ro
             - /code/logs:/etc/nginx/html/logs:ro
+
         ports:
             - 80:80
         networks:

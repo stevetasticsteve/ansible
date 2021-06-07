@@ -98,28 +98,33 @@ try:
     print("\n--- Applications ---")
 
     # check Lexicon log for content
-    with open("/code/logs/lexicon_error.log", "r") as lexicon_log:
-        content = lexicon_log.read()
-        if content:
-            fail("Lexicon log has errors, application is failing")
-        else:
-            ok("Lexicon program not reporting errors")
+    try:
+        with open("/code/logs/lexicon_error.html", "r") as lexicon_log:
+            content = lexicon_log.read()
+            if content:
+                fail("Lexicon log has errors, application is failing")
+            else:
+                ok("Lexicon program not reporting errors")
+    except FileNotFoundError:
+        print('No lexicon log found')
 
     print("\n--- Backups ---")
-
-    with open("/code/logs/backup.log") as backup_log:
-        content = backup_log.read()
-        if datetime.date.today().strftime("%a %d %b") not in content:
-            fail("Backup didn't run")
-        elif (
-            "Backup script finished sucessfully: {d}".format(
-                d=datetime.date.today().strftime("%a %d %b")
-            )
-            not in content
-        ):
-            fail("Backup didn't sucessfully complete")
-        else:
-            ok("Backups completed sucessfully")
+    try:
+        with open("/code/logs/backup.html") as backup_log:
+            content = backup_log.read()
+            if datetime.date.today().strftime("%a %d %b") not in content:
+                fail("Backup didn't run")
+            elif (
+                "Backup script finished sucessfully: {d}".format(
+                    d=datetime.date.today().strftime("%a %d %b")
+                )
+                not in content
+            ):
+                fail("Backup didn't sucessfully complete")
+            else:
+                ok("Backups completed sucessfully")
+    except FileNotFoundError:
+        print('No backup log found')
 
     if in_kovol:
         print("\n--- Backup_pi ---")
@@ -196,7 +201,7 @@ finally:
     # add to a system log
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
-    fh = logging.handlers.RotatingFileHandler("/code/logs/server_health.log")
+    fh = logging.handlers.RotatingFileHandler("/code/logs/server_health.html")
     f = logging.Formatter("%(message)s")
     fh.setFormatter(f)
     logger.addHandler(fh)
