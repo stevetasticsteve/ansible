@@ -96,6 +96,14 @@
     rule: allow
     name: ssh
 
+- name: Schedule Update
+  cron:
+    name: update
+    state: present
+    job: "apt update && apt upgrade -y"
+    hour: "1"
+    minute: "0"
+
 - name: mount external storage
   mount:
     path: "{{ item.mount_point }}"
