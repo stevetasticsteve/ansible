@@ -21,9 +21,10 @@
 - name: Schedule text update
   cron:
     name: Texts update
+    user: www-data
     state: present
     job: "bash /code/texts/run_interlinear.sh"
-    minute: "20,40"
+    minute: "*/10"
     
 - name: Symlink the source xml directory
   file:

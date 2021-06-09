@@ -31,11 +31,3 @@
 - name: Start docker services
   shell: docker-compose --env /etc/docker/nextcloud.env -f /etc/docker/kovol_server_docker-compose.yml up -d
 
-# Standard docker process leaves this one folder without executable permissions for others. 
-# This prevents symlinking to the location for scripts to access.
-- name: Set other executable permission on nextcloud docker volume
-  file:
-    path: /mnt/disk1/docker-data/volumes/nextcloud_data/_data/data
-    state: directory
-    mode: "0775"
-    owner: "www-data"

@@ -96,6 +96,18 @@ try:
         ok("CPU usage averaging {p:.2f}%".format(p=cpu))
 
     print("\n--- Applications ---")
+    # nc_data_folder = "mnt/disk1/docker-data/volumes/nextcloud_data/_data/data/"
+    # nextcloud_permissions = subprocess.run(["stat", "-c", "'%a'", nc_data_folder], stdout=PIPE)
+    # if nextcloud_permissions != "775":
+    #     print('Nextcloud permissions incorrect, attempting to resolve.')
+    #     subprocess.run(["sudo", "chmod", "775", nc_data_folder])
+    #     retried_permissions = subprocess.run(["stat", "-c", "'%a'", nc_data_folder], stdout=PIPE)
+    #     if retried_permissions != "775":
+    #         fail("Nextcloud permissions are too restrictive")
+    #     else:
+    #         ok("Nextcloud permissions resolved.")
+    # else:
+    #     ok("Nextcloud permissions ok.")
 
     # check Lexicon log for content
     try:
@@ -179,7 +191,9 @@ try:
         ("Lexicon", http + "/lexicon/main_dict.html"),
         ("Songs", http + "/songs/KovolSongbook.html"),
         ("Texts", http + "/texts/index.html"),
+        ("Text audio", http + "/texts/audio/"),
         ("Nextcloud", http + ":8080/login"),
+        ("Logs", http + "/logs/"),
     ]
     for site in websites:
         rsp = subprocess.run(["curl", "-Is", site[1]], stdout=PIPE).stdout.decode()

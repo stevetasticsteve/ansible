@@ -46,6 +46,7 @@
 - name: Schedule Lexicon update
   cron:
     name: Lexicon update
+    user: www-data
     state: present
     job: "bash /code/lexicon/run_lexicon.sh"
     minute: "20"

@@ -15,6 +15,7 @@
 - name: Schedule Health check
   cron:
     name: Server status check
+    user: "{{ user }}"
     state: present
     job: "python3 /code/server_check/check.py"
     hour: "6,12,23"
