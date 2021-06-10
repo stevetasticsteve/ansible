@@ -2,20 +2,20 @@
   file:
     state: directory
     path: "/code/backup"
-    mode: "0777"
+    mode: "0755"
     owner: "{{ user }}"
 
 - name: Copy over backup script
   copy:
       src: "backup.py"
       dest: "/code/backup/backup.py"
-      mode: "0777"
+      mode: "0755"
       owner: "{{ user }}"
 
 - name: Schedule backup
   cron:
     name: Backup
     state: present
-    job: "python3 /code/backup/backup.py"
+    job: "python3 /code/backup/backup.py >/dev/null 2>&1"
     hour: "3"
     minute: "0"

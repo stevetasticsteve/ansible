@@ -16,6 +16,9 @@ services:
             - 80:80
         networks:
             - nginx
+        depends_on:
+            - clahub
+            - nextcloud
 
     clahub:
         container_name: clahub

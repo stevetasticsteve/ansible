@@ -1,15 +1,25 @@
-- name: Create html folder
+- name: Create /html 
+  file:
+    path: /html
+    state: directory
+    owner: "www-data"
+    group: "www-data"
+    mode: "0777"
+    recurse: yes
+    
+- name: Fill html folder
   copy:
     src: html
     mode: "0777"
-    owner: "{{ user }}"
+    owner: "www-data"
+    group: www-data
     dest: /
 
 - name: Create Bootstrap folder
   file:
     path: "/html/static/bootstrap"
     state: directory
-    mode: "0777"
+    mode: "0755"
     owner: "{{ user }}"
         
 - name: Extract bootstrap
@@ -17,13 +27,13 @@
     src: bootstrap.zip
     dest: "/html/static/bootstrap"
     owner: "{{ user }}"
-    mode: "0777"
+    mode: "0755"
 
 - name: Create Jquery folder
   file:
     path: "/html/static/jquery"
     state: directory
-    mode: "0777"
+    mode: "0755"
     owner: "{{ user }}"
         
 - name: Extract jquery
@@ -31,4 +41,4 @@
     src: jquery.zip
     dest: "/html/static/jquery"
     owner: "{{ user }}"
-    mode: "0777"
+    mode: "0755"

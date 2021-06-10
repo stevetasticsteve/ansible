@@ -23,7 +23,7 @@
     name: Texts update
     user: www-data
     state: present
-    job: "bash /code/texts/run_interlinear.sh"
+    job: "/bin/bash /code/texts/run_interlinear.sh >/dev/null 2>&1"
     minute: "*/10"
     
 - name: Symlink the source xml directory
@@ -33,18 +33,5 @@
       owner: "www-data"
       group: "www-data"
       mode: "0755"
-      state: link
-      force: yes
-
-# This symlink is a hack to allow Nginx to serve audio files. The link will appear broken on the host because it maps
-# to the container's fs. A neater way to do this would probably be creating my own Nginx image with the symlink as part
-# of the image, but it seems less reliable. The link may not exist yet, an error has the potential to derail the entire 
-# compose file, whereas if this link fails it's only audio that won't play.
-- name: Symlink the source audio directory
-  file:
-      src: "/nextcloud/data/steve/files/Team Share/texts/audio"
-      dest: /html/texts/audio
-      owner: "www-data"
-      group: "www-data"
       state: link
       force: yes

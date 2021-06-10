@@ -11,12 +11,13 @@ workstation_packages:
  - neofetch         # cli system info
  - git              # version control
  - virt-manager     # virtual machines
- - curl	    # grabbing web pages
+ - curl	    	    # grabbing web pages
  - snapd	    # snap packages
  # Security
  - cryptsetup       # LUKS utilites
  - ufw              # firewall
  - gufw             # graphical firewall
+ - seahorse-nautilus # encryption in file manager
  # Python
  - python3-distutils
  - python3-venv

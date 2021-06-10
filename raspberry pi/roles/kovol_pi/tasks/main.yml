@@ -5,6 +5,16 @@
     owner: root
     mode: "0644"
 
+- name: Add users to www-data group
+  user:
+    name: "{{ item }}"
+    groups: 
+    -  www-data
+    append: yes
+    update_password: on_create
+    state: present
+  loop: "{{ users }}"
+
 - name: Configure docker nextcloud and CLAHub
   include_tasks: docker.yml
 

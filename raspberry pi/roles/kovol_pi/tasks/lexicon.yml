@@ -48,6 +48,6 @@
     name: Lexicon update
     user: www-data
     state: present
-    job: "bash /code/lexicon/run_lexicon.sh"
-    minute: "20"
+    job: "/bin/bash /code/lexicon/run_lexicon.sh >/dev/null 2>&1"
+    minute: "30"
     hour: "0"

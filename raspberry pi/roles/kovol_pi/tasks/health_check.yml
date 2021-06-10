@@ -2,14 +2,14 @@
   file:
     state: directory
     path: "/code/server_check"
-    mode: "0777"
+    mode: "0755"
     owner: "{{ user }}"
 
 - name: Copy over health check script
   copy:
       src: "server_health.py"
       dest: "/code/server_check/check.py"
-      mode: "0777"
+      mode: "0755"
       owner: "{{ user }}"
 
 - name: Schedule Health check
@@ -17,6 +17,6 @@
     name: Server status check
     user: "{{ user }}"
     state: present
-    job: "python3 /code/server_check/check.py"
+    job: "python3 /code/server_check/check.py >/dev/null 2>&1"
     hour: "6,12,23"
     minute: "0"

@@ -96,18 +96,6 @@ try:
         ok("CPU usage averaging {p:.2f}%".format(p=cpu))
 
     print("\n--- Applications ---")
-    # nc_data_folder = "mnt/disk1/docker-data/volumes/nextcloud_data/_data/data/"
-    # nextcloud_permissions = subprocess.run(["stat", "-c", "'%a'", nc_data_folder], stdout=PIPE)
-    # if nextcloud_permissions != "775":
-    #     print('Nextcloud permissions incorrect, attempting to resolve.')
-    #     subprocess.run(["sudo", "chmod", "775", nc_data_folder])
-    #     retried_permissions = subprocess.run(["stat", "-c", "'%a'", nc_data_folder], stdout=PIPE)
-    #     if retried_permissions != "775":
-    #         fail("Nextcloud permissions are too restrictive")
-    #     else:
-    #         ok("Nextcloud permissions resolved.")
-    # else:
-    #     ok("Nextcloud permissions ok.")
 
     # check Lexicon log for content
     try:
@@ -119,6 +107,16 @@ try:
                 ok("Lexicon program not reporting errors")
     except FileNotFoundError:
         print('No lexicon log found')
+        
+    try:
+        with open("/html/lexicon/main_dict.html", "r") as lex:
+            content = lex.read()
+            if datetime.datetime.now().strftime('%A %d %B %Y') not in content:
+                fail("Lexicon not updated today")
+            else:
+                ok('Lexicon updated today')
+    except FileNotFoundError:
+        print('No lexicon html found')
 
     print("\n--- Backups ---")
     try:
