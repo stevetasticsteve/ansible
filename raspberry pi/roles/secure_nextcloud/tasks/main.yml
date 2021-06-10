@@ -1,0 +1,38 @@
+- name: create docker folder
+  file:
+    state: directory
+    path: /etc/docker
+    owner: "{{ user }}"
+    mode: "0755"
+    group: docker
+
+- name: copy docker files
+  copy:
+    src: secure_nextcloud
+    mode: "0755"
+    owner: "{{ user }}"
+    group: docker
+    dest: /etc/docker
+
+- name: create docker-compose.yml
+  template:
+    src: docker-compose.yml
+    dest: /etc/docker/secure_nextcloud/docker-compose.yml
+    mode: "0755"
+    owner: "{{ user }}"
+    group: "{{ docker }}"
+
+- name: create db.env
+  template:
+    src: db.env
+    dest: /etc/docker/secure_nextcloud/db.env
+    mode: "0755"
+    owner: "{{ user }}"
+    group: "{{ docker }}"
+
+- name: Stop docker services
+  shell: docker-compose -f /etc/docker/secure_nextcloud/docker-compose.yml down
+  ignore_errors: yes
+
+- name: Start docker services
+  shell: docker-compose -f /etc/docker/secure_nextcloud/docker-compose.yml up -d
