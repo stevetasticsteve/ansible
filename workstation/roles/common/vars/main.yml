@@ -35,6 +35,7 @@ workstation_packages:
  - vnstat           # monitor data usage
  - nmap             # network profiling
  - rclone	    # cloud storage
+ - iperf
  # Office
  - hunspell-en-gb   # British spell check
  - thunderbird
