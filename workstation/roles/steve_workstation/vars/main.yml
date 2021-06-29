@@ -19,6 +19,11 @@ steve_workstation_packages:
  # OBS
  - ffmpeg
  - obs-studio
+ # Android
+ - android-sdk-platform-tools-common
 
 steve_workstation_classic_snaps:
  - pycharm-community
+ - android-studio
+ 
+ # pip3 docker-compose

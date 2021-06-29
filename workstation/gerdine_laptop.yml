@@ -1,6 +1,8 @@
 - hosts: localhost
   connection: local
   become: True
+  vars_files:
+  - ../secrets.yml
   roles:
    - common
    - gerdine_workstation

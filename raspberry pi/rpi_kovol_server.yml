@@ -23,7 +23,7 @@
     - allowed_ips: "{{ static_ip }} 192.168.0.6"
 
   roles: 
-    #- rpi_bootstrap
-    #- rpi_docker_server
+    # - rpi_bootstrap
+    # - rpi_docker_server
     - kovol_pi
 ...

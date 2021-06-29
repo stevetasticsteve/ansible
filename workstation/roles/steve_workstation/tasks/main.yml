@@ -29,15 +29,14 @@
    deb: /tmp/imager_1.5_amd64.deb
   when: rpi_check.rc == 1
 
-
 - name: Install Steve's packages
   apt:
     name: "{{steve_workstation_packages}}"
 
-- name: Add user to docker group
+- name: Add user to docker and android group
   user:
    name: "{{user}}"
-   groups: docker
+   groups: docker,plugdev
    append: yes
 
 - name: Install Steve's classic snaps
@@ -61,11 +60,10 @@
     name: gnome-shell-extension-ubuntu-dock
     state: absent
 
-
 - name: Add Gerdine user
   user:
    name: gerdine
-   password: "{{gerdine_user_password}}"
+   password: "{{gerdine_laptop_password | password_hash('sha512') }}"
    groups: 
    append: yes
    update_password: on_create

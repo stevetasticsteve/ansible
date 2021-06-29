@@ -92,9 +92,10 @@
 - name: Add user to KVM group
   user:
    name: "{{user}}"
-   groups: kvm, libvirt
+   groups: kvm,libvirt
    append: yes
   loop:
 
 - include: gnome.yml
+- include: signal.yml
 

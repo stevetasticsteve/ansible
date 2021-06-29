@@ -1,13 +1,8 @@
 - hosts: localhost
   connection: local
   become: True
-  vars_prompt:
-   - name: gerdine_user_password
-     prompt: "password for gerdine user: "
-     private: yes
-     encrypt: sha512_crypt
-     confirm: yes
-     when: 
+  vars_files:
+  - ../secrets.yml
   
   roles:
    - common
