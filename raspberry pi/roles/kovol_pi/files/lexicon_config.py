@@ -6,6 +6,7 @@ settings = {
     'log_file': '/code/logs/lexicon_error.html',
     'bootstrap': '/static/bootstrap',
     'jquery': '/static/jquery',
+    'fontawesome': '/static/fontawesome',
     'verb_spreadsheet': 'Kovol_verbs.ods',
 }
 
