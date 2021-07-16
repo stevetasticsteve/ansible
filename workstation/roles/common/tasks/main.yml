@@ -40,6 +40,11 @@
     name: authy
     channel: beta
 
+- name: Install pip packages
+  pip:
+    name: "{{ pip_packages }}"
+      
+
 - name: Check if tagspaces installed
   command: dpkg-query -W tagspaces
   register: tagspaces_check
@@ -94,7 +99,6 @@
    name: "{{user}}"
    groups: kvm,libvirt
    append: yes
-  loop:
 
 - include: gnome.yml
 - include: signal.yml

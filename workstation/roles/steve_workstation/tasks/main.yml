@@ -33,6 +33,10 @@
   apt:
     name: "{{steve_workstation_packages}}"
 
+- name: Install pip packages
+  pip:
+    name: "{{ steve_pip_packages }}"
+
 - name: Add user to docker and android group
   user:
    name: "{{user}}"

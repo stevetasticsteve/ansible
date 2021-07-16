@@ -74,3 +74,11 @@ workstation_templates:
  - python_file.py
  - document.odt
  - spreadsheet.ods
+
+pip_packages:
+  - tabulate
+  - PyPDF2
+  - pytest
+  - sqlalchemy
+  - black
+  - PyQt5

@@ -1,6 +1,5 @@
 raspberry pi/roles/rpi_bootstrap/templates/wpa_supplicant.conf
 hosts.yml
-secrets.yml
 old_config/apache_conf.j2
 old_config/CLAHub_environment_vars.j2
 old_config/CLAHub_init.j2

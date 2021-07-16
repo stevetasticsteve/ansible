@@ -26,4 +26,5 @@ steve_workstation_classic_snaps:
  - pycharm-community
  - android-studio
  
- # pip3 docker-compose
+steve_pip_packages:
+ - docker-compose
