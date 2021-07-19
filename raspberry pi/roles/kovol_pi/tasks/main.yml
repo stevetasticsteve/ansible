@@ -13,13 +13,7 @@
     append: yes
     update_password: on_create
     state: present
-  loop: "{{ users }}"
-
-- name: Configure docker nextcloud and CLAHub
-  include_tasks: docker.yml
-
-- name: Copy static html folder
-  include_tasks: static_html.yml
+  loop: "{{ users }}"  # Defined under role defaults
 
 - name: Create code folder
   file:
@@ -27,6 +21,9 @@
     path: "/code/logs"
     mode: "0777"
     owner: "{{ user }}"
+
+- name: Copy static html folder
+  include_tasks: static_html.yml
 
 - name: Install Lexicon
   include_tasks: lexicon.yml
@@ -39,3 +36,6 @@
 
 - name: Set up server check
   include_tasks: health_check.yml
+
+- name: Configure docker nextcloud and CLAHub
+  include_tasks: docker.yml

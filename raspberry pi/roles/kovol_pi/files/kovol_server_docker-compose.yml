@@ -8,9 +8,9 @@ services:
         volumes:
             - /etc/docker/nginx.conf:/etc/nginx/nginx.conf:ro
 
-            - /html/:/etc/nginx/html:ro
+            - /html/:/etc/nginx/html
             - nextcloud_data:/nextcloud:ro
-            - /code/logs:/etc/nginx/html/logs:ro
+            - /code/logs:/etc/nginx/html/logs
 
         ports:
             - 80:80
@@ -28,6 +28,18 @@ services:
             - clahub:/code/data
         ports:
             - 8000:8000
+        networks:
+            - nginx
+            
+    kovol-services:
+        container_name: kovol-services
+        restart: unless-stopped
+        image: stevetasticsteve/kovol-services:arm
+        volumes:
+            - /html/static:/app/static/:ro
+            - /code/kovol-services/kovol_verbs:/app/kovol_verbs:ro
+        ports:
+            - 3000:3000
         networks:
             - nginx
         

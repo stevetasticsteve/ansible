@@ -1,7 +1,10 @@
 ---
-# Turns a raspberry pi into a docker server. Installs docker, adds user to docker group, and if a stick is mounted in the pi tells docker to save data there.
+# Bootstraps a fresh rpi from scratch to make it a kovol server.
+# Run initially: ansible-playbook -i raspberry\ pi/new_pi_hosts raspberry\ pi/rpi_kovol_server.yml
+# Follow up runs: ansible-playbook raspberry\ pi/rpi_kovol_server.yml
+
 - name: Set up Kovol pi
-  hosts: stanley_pi
+  hosts: kovol_pi
   become: True
   vars_files:
     - ../secrets.yml
@@ -14,7 +17,7 @@
         - { mount_point: "/mnt/disk2", uuid: "ecbe62ca-c830-4d8c-9515-a0e10cc83474", type: "ext4" }
     - additional_users:
         - { name: gerdine, password: "{{ gerdine_laptop_password }}", key: "{{ lookup('file', 'gerdine_ssh.pub') }}", groups: sudo}
-        - { name: philip, password: "{{ philip_password }}", key: "{{ lookup('file', 'philip_ssh.pub') }}", groups: sudo}
+        - { name: philip, password: "{{ philip_password }}", key: "{{ lookup('file', 'philip_ssh.pub') }}", groups: sudo,docker}
   
     - remote_backup_ip_address: 192.168.0.101
     - remote_backup_hostname: backup_pi
@@ -23,7 +26,7 @@
     - allowed_ips: "{{ static_ip }} 192.168.0.6"
 
   roles: 
-    # - rpi_bootstrap
-    # - rpi_docker_server
+    - rpi_bootstrap
+    - rpi_docker_server
     - kovol_pi
 ...
