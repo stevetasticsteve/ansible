@@ -27,6 +27,7 @@
     minute: "*/10"
     
 - name: Symlink the source xml directory
+  # This symlink will enable code to access the xml file stored in nextcloud (when process runs as root or www-data)
   file:
       src: "{{ external_storage[0].mount_point}}/docker-data/volumes/nextcloud_data/_data/data/steve/files/Team Share/texts/"
       dest: /code/texts/xml

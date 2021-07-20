@@ -8,9 +8,9 @@ services:
         volumes:
             - /etc/docker/nginx.conf:/etc/nginx/nginx.conf:ro
 
-            - /html/:/etc/nginx/html
-            - nextcloud_data:/nextcloud:ro
-            - /code/logs:/etc/nginx/html/logs
+            - /html/:/etc/nginx/html  # serve static html
+            - nextcloud_data:/etc/nginx/html/nc_data:ro  # serve interlinear text audio
+            - /code/logs:/etc/nginx/html/logs # serve code logs
 
         ports:
             - 80:80

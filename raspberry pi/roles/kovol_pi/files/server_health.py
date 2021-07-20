@@ -189,8 +189,8 @@ try:
         ("Lexicon", http + "/lexicon/main_dict.html"),
         ("Songs", http + "/songs/KovolSongbook.html"),
         ("Texts", http + "/texts/index.html"),
-        ("Text audio", http + "/texts/audio/"),
         ("Nextcloud", http + ":8080/login"),
+        ("Kovol services", http + ":3000"),
         ("Logs", http + "/logs/"),
     ]
     for site in websites:
