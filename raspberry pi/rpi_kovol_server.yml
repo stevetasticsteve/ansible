@@ -13,8 +13,8 @@
     - static_ip: 192.168.0.100
     - hostname: kovol-pi
     - external_storage:
-        - { mount_point: "/mnt/disk1", uuid: "8bceca6d-0f37-4259-9540-548c1dbfde2d", type: "ext4" }
-        - { mount_point: "/mnt/disk2", uuid: "ecbe62ca-c830-4d8c-9515-a0e10cc83474", type: "ext4" }
+        - { mount_point: "/mnt/disk1", uuid: "e1a7e069-810a-4769-9d89-c2036ebaf51d", type: "ext4" }
+        - { mount_point: "/mnt/disk2", uuid: "376655db-ce2b-4438-a9d2-baffdfbf6bc0", type: "ext4" }
     - additional_users:
         - { name: gerdine, password: "{{ gerdine_laptop_password }}", key: "{{ lookup('file', 'gerdine_ssh.pub') }}", groups: sudo}
         - { name: philip, password: "{{ philip_password }}", key: "{{ lookup('file', 'philip_ssh.pub') }}", groups: sudo,docker}
