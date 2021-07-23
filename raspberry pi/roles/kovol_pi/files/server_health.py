@@ -58,10 +58,14 @@ try:
         ok("SD card usage at {x:.0f}%".format(x=sd_percent))
 
     # check sticks are mounted
-    if not os.path.exists("/mnt/disk1/docker-data") or not os.path.exists(
-        "/mnt/disk2/docker-backup"
-    ):
+    if not os.path.exists("/mnt/disk1/docker-data"):
         fail("External storage not mounted")
+        
+    mnt_points = ["/mnt/disk1", "/mnt/disk2"]
+    for m in mnt_points:
+        mnt = subprocess.run(["mountpoint", m], stdout=PIPE).stdout.strip().decode()
+        if mnt != f"{m} is a mountpoint":
+            fail(f"{m} is not a mountpoint")
     try:
         rtn1 = subprocess.run(["ls", "/mnt/disk1"], stdout=PIPE)
         rtn1.check_returncode()
